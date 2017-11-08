@@ -28,21 +28,22 @@ public:
 		this->TexCoords = _TexCoords;
 	}
 
-	Vertex(const Vector3& _Position, const Vector2& _TexCoords, const Vector2& _Normal)
-	{
-		this->Position = _Position;
-		this->TexCoords = _TexCoords;
-	}
+	//Vertex(const Vector3& _Position, const Vector2& _TexCoords/*, const Vector3& _Normal*/)
+	//{
+	//	this->Position = _Position;
+	//	this->TexCoords = _TexCoords;
+	//	//this->Normal = _Normal;
+	//}
 //private:
 	Vector3 Position;
 	Vector2 TexCoords;
-	Vector3 Normal;
+	//Vector3 Normal;
 };
 
 class Mesh
 {
 public:
-	Mesh(std::string filePath);
+	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
 	Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
 	virtual ~Mesh();
 
@@ -50,8 +51,8 @@ public:
 
 protected:
 private:
-	//Mesh(const Mesh& otehr);
-	//void operator=(const Mesh& otehr);
+	Mesh(const Mesh& otehr);
+	void operator=(const Mesh& otehr);
 
 	enum
 	{
@@ -61,6 +62,10 @@ private:
 
 		NUM_BUFFERS
 	};
+
+	std::vector<Vector3> positions;
+	std::vector<Vector2> texCoords;
+	std::vector<GLuint> indicies;
 
 	GLuint m_vertexArrayObject;
 	GLuint m_vertexArrayBuffers[NUM_BUFFERS];

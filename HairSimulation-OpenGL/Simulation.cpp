@@ -18,7 +18,7 @@ Simulation::Simulation()
 
 	texture = new Texture("./resources/textures/bricks.jpg");
 
-	model = new Model("./resources/models/TheRock/TheRock2.obj");
+	model = new Model("./resources/models/monkey3.obj");
 }
 
 Simulation::~Simulation()

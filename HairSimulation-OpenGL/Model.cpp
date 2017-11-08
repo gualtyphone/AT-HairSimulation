@@ -14,7 +14,7 @@ void Model::Draw()
 {
 	for (GLuint i = 0; i < meshes.size(); i++)
 	{
-		meshes[i].Draw();
+		meshes[i]->Draw();
 	}
 }
 
@@ -47,7 +47,7 @@ void Model::processNode(aiNode * node, const aiScene * scene)
 	}
 }
 
-Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
+Mesh* Model::processMesh(aiMesh * mesh, const aiScene * scene)
 {
 	std::vector<Vertex> vertices;
 	std::vector<GLuint> indicies;
@@ -68,11 +68,11 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
-			vertex.Normal = vector;
+			//vertex.Normal = vector;
 		}
 		else
 		{
-			vertex.Normal = Vector3(0.0, 0.0, 0.0);
+			//vertex.Normal = Vector3(0.0, 0.0, 0.0);
 		}
 		if (mesh->mTextureCoords[0])
 		{
@@ -108,7 +108,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
 		textures.insert(textures.end(), specularMap.begin(), specularMap.end());
 	}
 
-	return Mesh(&vertices[0], vertices.size(), &indicies[0], indicies.size());
+	return new Mesh(vertices, indicies);
 }
 
 std::vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type, std::string typeName)
