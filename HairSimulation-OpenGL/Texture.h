@@ -6,19 +6,22 @@ class Texture
 {
 public:
 	Texture();
-	Texture(std::string filePath);
+	Texture(std::string filePath, std::string typeName);
 	~Texture();
-
-	//static GLint TextureFromFile(const char *path, std::string directory);
 
 	void Bind(unsigned int unit);
 
-	GLuint m_texture;
-	std::string type;
-	std::string path;
+	inline std::string* GetPath() { return &path; }
+	inline std::string* GetType() { return &type; }
+
 protected:
 private:
 	//Texture(const Texture& other);
 	//void operator=(const Texture& other);
+
+	GLuint m_texture;
+	std::string type;
+	std::string path;
+
 };
 

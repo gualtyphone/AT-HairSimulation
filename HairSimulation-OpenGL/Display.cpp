@@ -133,7 +133,11 @@ Display::Display(HINSTANCE _hInstance, int iCmdShow, int _width, int _height, st
 		/* Problem: glewInit failed, something is seriously wrong. */
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(error));
 	}
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 }
+
 
 Display::~Display()
 {
@@ -193,7 +197,7 @@ void Display::StartDraw()
 			  0, 1, 0);
 
 	// 4. modelling transformation and drawing
-	glClearColor(0.0, 0, 0, 0);
+	glClearColor(0.0, 0.03, 0.25, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

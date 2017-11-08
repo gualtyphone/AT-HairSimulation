@@ -117,6 +117,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="guicon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -125,17 +126,19 @@
     <ClCompile Include="Simulation.cpp" />
     <ClCompile Include="stb_image.c" />
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="VectorMath.cpp" />
+    <ClCompile Include="GMath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Display.h" />
+    <ClInclude Include="guicon.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Simulation.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="VectorMath.h" />
+    <ClInclude Include="GMath.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\basicShader.fs" />

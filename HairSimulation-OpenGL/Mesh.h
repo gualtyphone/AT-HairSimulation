@@ -1,14 +1,16 @@
 #pragma once
 
 #include <vector>
-#include "VectorMath.h"
-#include "Texture.h"
-#include "Shader.h"
+#include <sstream>
+
 #include <GL\glew.h>
 #include <assimp\Importer.hpp>
 #include <assimp\scene.h>
 #include <assimp\postprocess.h>
-#include <sstream>
+
+#include "GMath.h"
+#include "Texture.h"
+#include "Shader.h"
 
 class Vertex
 {
@@ -28,16 +30,25 @@ public:
 		this->TexCoords = _TexCoords;
 	}
 
-	//Vertex(const Vector3& _Position, const Vector2& _TexCoords/*, const Vector3& _Normal*/)
-	//{
-	//	this->Position = _Position;
-	//	this->TexCoords = _TexCoords;
-	//	//this->Normal = _Normal;
-	//}
-//private:
+	Vertex(const Vector3& _Position, const Vector2& _TexCoords, const Vector3& _Normal)
+	{
+		this->Position = _Position;
+		this->TexCoords = _TexCoords;
+		this->Normal = _Normal;
+	}
+
+	inline Vector3* GetPos() { return &Position; }
+	inline Vector2* GetTexCoord() { return &TexCoords; }
+	inline Vector3* GetNormal() { return &Normal; }
+
+    inline void SetPos(Vector3 &_p) { Position = _p; }
+	inline void SetTexCoord(Vector2 &_tc) { TexCoords = _tc; }
+	inline void SetNormal(Vector3 &_n) { Normal = _n; }
+
+private:
 	Vector3 Position;
 	Vector2 TexCoords;
-	//Vector3 Normal;
+	Vector3 Normal;
 };
 
 class Mesh

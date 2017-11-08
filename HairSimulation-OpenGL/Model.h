@@ -6,7 +6,9 @@
 #include <assimp\Importer.hpp>
 #include <assimp\scene.h>
 #include <assimp\postprocess.h>
-
+#include "Display.h"
+#include "Transform.h"
+#include "GMath.h"
 #include "Mesh.h"
 #include "Texture.h"
 
@@ -20,8 +22,8 @@ public:
 protected:
 private:
 	void loadModel(std::string path);
-	void processNode(aiNode *node, const aiScene *scene);
-	Mesh* processMesh (aiMesh *mesh, const aiScene *scene);
+	void processNode(aiNode* node, const aiScene* scene);
+	Mesh* processMesh (aiMesh* mesh, const aiScene* scene);
 	std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 
 	std::string directory;

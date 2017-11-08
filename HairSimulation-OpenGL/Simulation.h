@@ -3,6 +3,7 @@
 #include "Shader.h"
 #include "Mesh.h"
 #include "Model.h"
+#include "Transform.h"
 
 
 class Simulation
@@ -16,6 +17,7 @@ public:
 private:
 	Shader* shader;
 	Texture* texture;
+	Transform* transform;
 	Mesh* mesh;
 	Model* model;
 };

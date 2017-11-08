@@ -11,8 +11,8 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices)
 
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
-		positions.push_back(vertices[i].Position);
-		texCoords.push_back(vertices[i].TexCoords);
+		positions.push_back(*vertices[i].GetPos());
+		texCoords.push_back(*vertices[i].GetTexCoord());
 	}
 
 	for (int i = 0; i < indices.size(); i++)
@@ -57,8 +57,8 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* _indices, u
 
 	for (unsigned int i = 0; i < numVertices; i++)
 	{
-		positions.push_back(vertices[i].Position);
-		texCoords.push_back(vertices[i].TexCoords);
+		positions.push_back(*vertices[i].GetPos());
+		texCoords.push_back(*vertices[i].GetTexCoord());
 	}
 	//std::vector<unsigned int> indices;
 	for (int i = 0; i < numIndices; i++)

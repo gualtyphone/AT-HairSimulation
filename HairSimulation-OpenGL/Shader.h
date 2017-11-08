@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 #include "Display.h"
+#include "Transform.h"
+#include "GMath.h"
 
 class Shader
 {
@@ -11,8 +13,13 @@ public:
 	virtual ~Shader();
 
 	void Bind();
-//protected:
-//private:
+	void Update(const Transform& transform);
+
+protected:
+private:
+	//Shader(const Shader& other);
+	//void operator=(const Shader& other);
+
 	enum
 	{
 		VERTEX_SHADER = 0,
@@ -20,10 +27,16 @@ public:
 
 		NUM_SHADERS
 	};
-	/*Shader(const Shader& other);
-	void operator=(const Shader& other);
-*/
+
+	enum
+	{
+		TRANSFORM_U,
+
+		NUM_UNIFORM
+	};
+
 	GLuint m_program;
 	GLuint m_shaders[NUM_SHADERS];
+	GLuint m_uniforms[NUM_UNIFORM];
 };
 

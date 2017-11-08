@@ -8,10 +8,14 @@ Model::Model(std::string filePath)
 }
 
 Model::~Model()
-{}
+{
+	//TODO: clean up
+}
 
 void Model::Draw()
 {
+
+	// TODO: if there are textures in the model bind them to the right mesh
 	for (GLuint i = 0; i < meshes.size(); i++)
 	{
 		meshes[i]->Draw();
@@ -47,7 +51,7 @@ void Model::processNode(aiNode * node, const aiScene * scene)
 	}
 }
 
-Mesh* Model::processMesh(aiMesh * mesh, const aiScene * scene)
+Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
 	std::vector<Vertex> vertices;
 	std::vector<GLuint> indicies;
@@ -55,20 +59,18 @@ Mesh* Model::processMesh(aiMesh * mesh, const aiScene * scene)
 	for (GLuint i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
-		Vector3 vector;
-
-		vector.x = mesh->mVertices[i].x;
-		vector.y = mesh->mVertices[i].y;
-		vector.z = mesh->mVertices[i].z;
-		vertex.Position = vector;
+		Vector3 vector(mesh->mVertices[i].x,
+					   mesh->mVertices[i].y,
+					   mesh->mVertices[i].z);
+		vertex.SetPos(vector);
 
 		if (mesh->HasNormals())
 		{
 
-			vector.x = mesh->mNormals[i].x;
-			vector.y = mesh->mNormals[i].y;
-			vector.z = mesh->mNormals[i].z;
-			//vertex.Normal = vector;
+			Vector3 normal(mesh->mVertices[i].x,
+						   mesh->mVertices[i].y,
+						   mesh->mVertices[i].z);
+			vertex.SetNormal(normal);
 		}
 		else
 		{
@@ -76,15 +78,13 @@ Mesh* Model::processMesh(aiMesh * mesh, const aiScene * scene)
 		}
 		if (mesh->mTextureCoords[0])
 		{
-			Vector2 texCoords;
-			texCoords.x = mesh->mTextureCoords[0][i].x;
-			texCoords.y = mesh->mTextureCoords[0][i].y;
-
-			vertex.TexCoords = texCoords;
+			Vector2 texCoords(mesh->mTextureCoords[0][i].x,
+							  mesh->mTextureCoords[0][i].y);
+			vertex.SetTexCoord(texCoords);
 		}
 		else
 		{
-			vertex.TexCoords = Vector2(0.0, 0.0);
+			vertex.SetTexCoord(Vector2(0.0, 0.0));
 		}
 		vertices.push_back(vertex);
 	}
@@ -111,7 +111,7 @@ Mesh* Model::processMesh(aiMesh * mesh, const aiScene * scene)
 	return new Mesh(vertices, indicies);
 }
 
-std::vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type, std::string typeName)
+std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	std::vector<Texture> textures;
 
@@ -123,7 +123,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType
 		GLboolean skip = false;
 		for (GLuint j = 0; j < texturesLoaded.size(); j++)
 		{
-			if (texturesLoaded[j].path == str.C_Str())
+			if (*texturesLoaded[j].GetPath() == str.C_Str())
 			{
 				textures.push_back(texturesLoaded[j]);
 				skip = true;
@@ -132,9 +132,9 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType
 
 		if (!skip)
 		{
-			Texture texture(std::string(str.C_Str()));
-			texture.type = typeName;
-			texture.path = str.C_Str();
+			Texture texture(std::string(str.C_Str()), typeName);
+			//texture.type = typeName;
+			//texture.path = str.C_Str();
 
 			textures.push_back(texture);
 			texturesLoaded.push_back(texture);

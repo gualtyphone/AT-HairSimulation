@@ -6,9 +6,11 @@
 Texture::Texture()
 {}
 
-Texture::Texture(std::string filePath)
+Texture::Texture(std::string filePath, std::string typeName)
 {
 	int width, height, numComponents;
+	path = filePath;
+	type = typeName;
 	unsigned char* imageData = stbi_load(filePath.c_str(), &width, &height, &numComponents, 4);
 
 	if (imageData == NULL)

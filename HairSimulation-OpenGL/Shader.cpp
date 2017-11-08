@@ -1,5 +1,7 @@
 #include "Shader.h"
 
+#include <crtdbg.h>
+
 static std::string LoadShader(const std::string& fileName);
 static void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage);
 static GLuint CreateShader(const std::string& text, GLenum shaderType);
@@ -23,6 +25,8 @@ Shader::Shader(std::string& fileName)
 
 	glValidateProgram(m_program);
 	CheckShaderError(m_program, GL_VALIDATE_STATUS, true, "Error: Shader program is invalid: ");
+
+	m_uniforms[0] = glGetUniformLocation(m_program, "transform");
 }
 
 Shader::~Shader()
@@ -40,12 +44,20 @@ void Shader::Bind()
 	glUseProgram(m_program);
 }
 
+void Shader::Update(const Transform & transform)
+{
+	glUseProgram(m_program);
+	Matrix4 m = transform.Get();
+	glUniformMatrix4fv(m_uniforms[0], 1, GL_TRUE, &(m.Get()[0]));
+	
+}
+
 static GLuint CreateShader(const std::string& text, GLenum shaderType)
 {
 	GLuint shader = glCreateShader(shaderType);
 
 	if (shader == 0)
-		std::cerr << "Error: Shader creation failed";
+		_RPT0(_CRT_ERROR, "Error: Shader creation failed\n"); 
 
 	const GLchar* shaderSourceStrings[1];
 	GLint shaderSourceStringLengths[1];
@@ -79,7 +91,7 @@ static std::string LoadShader(const std::string& fileName)
 	}
 	else
 	{
-		std::cerr << "Unable to load shader: " << fileName << std::endl;
+		_RPT0(_CRT_ERROR, "Unable to load shader: " + fileName);
 	}
 
 	return output;
@@ -87,7 +99,7 @@ static std::string LoadShader(const std::string& fileName)
 
 static void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage)
 {
-	GLint success = 0;
+	GLint success = 1;
 	GLchar error[1024] = { 0 };
 
 	if (isProgram)
@@ -102,6 +114,7 @@ static void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const s
 		else
 			glGetShaderInfoLog(shader, sizeof(error), NULL, error);
 
-		std::cerr << errorMessage << ": '" << error << "'" << std::endl;
+		_RPT0(_CRT_ERROR, (errorMessage + ": '" + error + "'\n").c_str());
+		
 	}
 }
