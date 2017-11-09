@@ -33,6 +33,24 @@ namespace GMath
 			return Vector3(x + vec.x, y + vec.y, z + vec.z);
 		}
 
+		//Multiply
+		Vector3 operator*(const Vector3 &vec) const
+		{
+			return Vector3(x * vec.x, y * vec.y, z * vec.z);
+		}
+
+		//Multiply
+		Vector3 operator*(const float &ot) const
+		{
+			return Vector3(x * ot, y * ot, z * ot);
+		}
+
+		//Divide
+		Vector3 operator/(const float &ot) const
+		{
+			return Vector3(x / ot, y / ot, z / ot);
+		}
+
 		//subtract two vector
 		Vector3 operator-(const Vector3 &vec) const
 		{

@@ -15,10 +15,22 @@ public:
 	}
 	~Camera();
 
+	void Move(Vector3 direction)
+	{
+		position = position + direction;
+	}
+
+	void Rotate(Vector3 rotation)
+	{
+		forward = forward + rotation;
+		forward.normalize();
+		
+	}
+
 	inline Matrix4 GetVewProjection() const
 	{
-		Matrix4 view = lookAt(position, position + forward, up);
-		return *persp * view;
+		//return *GMath::perspective(1.4, 1.1, 0.1f, 100000.0f);
+		return (*(persp) * lookAt(position, position + forward, up));
 	}
 
 protected:

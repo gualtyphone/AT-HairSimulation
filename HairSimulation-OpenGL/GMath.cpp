@@ -116,7 +116,7 @@ Matrix4 GMath::translate(Vector3 v)
 	return Matrix4(1, 0, 0, v.GetX(),
 				   0, 1, 0, v.GetY(),
 				   0, 0, 1, v.GetZ(),
-				   0, 0, 0, 1);
+				   0, 0,0, 1);
 }
 
 Matrix4 GMath::rotateAroundXAxis(float q)
@@ -143,6 +143,36 @@ Matrix4 GMath::rotateAroundZAxis(float q)
 				   0, 0, 1, 0,
 				   0, 0, 0, 1);
 }
+//Matrix4 GMath::rotateAroundAxis(float angle, Vector3 v)
+//{
+//	float const a = angle;
+//	float const c = cos(a);
+//	float const s = sin(a);
+//
+//	Vector3 axis(Vector3::normalize(v));
+//	Vector3 temp((float(1) - c) * axis);
+//
+//	Matrix4 Rotate;
+//	Rotate.Get()[0] = c + temp.GetX() * axis.GetX();
+//	Rotate.Get()[1]= temp[0] * axis[1] + s * axis[2];
+//	Rotate.Get()[2] = temp[0] * axis[2] - s * axis[1];
+//
+//	Rotate.Get()[4] = temp[1] * axis[0] - s * axis[2];
+//	Rotate.Get()[5] = c + temp[1] * axis[1];
+//	Rotate.Get()[6] = temp[1] * axis[2] + s * axis[0];
+//
+//	Rotate.Get()[8] = temp[2] * axis[0] + s * axis[1];
+//	Rotate.Get()[9] = temp[2] * axis[1] - s * axis[0];
+//	Rotate.Get()[10] = c + temp[2] * axis[2];
+//
+//	Matrix4 Result;
+//	Result[0] = m[0] * Rotate[0][0] + m[1] * Rotate[0][1] + m[2] * Rotate[0][2];
+//	Result[1] = m[0] * Rotate[1][0] + m[1] * Rotate[1][1] + m[2] * Rotate[1][2];
+//	Result[2] = m[0] * Rotate[2][0] + m[1] * Rotate[2][1] + m[2] * Rotate[2][2];
+//	Result[3] = m[3];
+//	return Result;
+//}
+
 
 Matrix4 GMath::rotate(Quaternion quaternion)
 {
@@ -171,8 +201,6 @@ Matrix4 GMath::scale(Vector3 v)
 }
 Matrix4* GMath::perspective(float fov, float aspect, float zNear, float zFar)
 {
-	//assert(abs(aspect - std::numeric_limits<float>::epsilon()) > static_cast<float>(0));
-
 	float const tanHalfFovy = tan(fov / 2.0f);
 
 	float _00 = 1.0f / (aspect * tanHalfFovy);
@@ -181,22 +209,28 @@ Matrix4* GMath::perspective(float fov, float aspect, float zNear, float zFar)
 	float _23 = -1.0f;
 	float _32 = -(zFar * zNear) / (zFar - zNear);
 	return new Matrix4(_00, 0, 0, 0,
-				   0, _11, 0, 0,
-				   0, 0, _22, _23,
-				   0, 0, _32, 1);
+					   0, _11, 0, 0,
+					   0, 0, _22, _32,
+					   0, 0, _23, 1);
 }
 Matrix4 GMath::lookAt(Vector3 position, Vector3 other, Vector3 up)
 {
 	Vector3 zaxis = Vector3::normalize(other - position);
-	Vector3	xaxis =  Vector3::normalize(Vector3::cross(zaxis, up));
-	Vector3	yaxis =  Vector3::cross(xaxis, zaxis);
+	Vector3	xaxis =  Vector3::normalize(Vector3::cross(up, zaxis));
+	Vector3	yaxis =  Vector3::cross(zaxis, xaxis);
 	//lil cheat to inver vectors
-	Vector3 a(0, 0, 0);
+	//Vector3 a(0, 0, 0);
 
-	return Matrix4(xaxis.GetX(), yaxis.GetX(), -zaxis.GetX(),  0,
-				   xaxis.GetY(), yaxis.GetY(), -zaxis.GetY(),  0,
-				   xaxis.GetZ(), yaxis.GetZ(), -zaxis.GetZ(),  0,
--Vector3::dot(xaxis, position), -Vector3::dot(yaxis, position),  Vector3::dot(zaxis,position),  1);
+	Matrix4 Rotation(xaxis.GetX(), yaxis.GetX(), zaxis.GetX(), 0,
+					 xaxis.GetY(), yaxis.GetY(), zaxis.GetY(), 0,
+					 xaxis.GetZ(), yaxis.GetZ(), zaxis.GetZ(), 0,
+					 0, 0, 0, 1);
+	Matrix4 Translation(1, 0, 0, -position.GetX(),
+						0, 1, 0, -position.GetY(),
+						0, 0, 1, -position.GetZ(),
+						0, 0, 0, 1);
+	return Rotation * Translation;
+
 }
 #pragma endregion
 

@@ -1,4 +1,5 @@
 #include "Display.h"
+#include "Input.h"
 #define Win32
 #ifdef Win32
 
@@ -34,10 +35,32 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 					PostQuitMessage(0);
 					break;
 				default:
+					Input::HandleKeyEvent(message, wparam, lparam);
 					break;
 			}
 			return 0;
-
+		case WM_KEYUP:
+			switch (wparam)
+			{
+				case VK_ESCAPE:
+					PostQuitMessage(0);
+					break;
+				default:
+					Input::HandleKeyEvent(message, wparam, lparam);
+					break;
+			}
+			return 0;
+		case WM_MOUSEMOVE:
+			switch (wparam)
+			{
+				case VK_ESCAPE:
+					PostQuitMessage(0);
+					break;
+				default:
+					Input::HandleMouseEvent(message, wparam, lparam);
+					break;
+			}
+			return 0;
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
@@ -133,11 +156,13 @@ Display::Display(HINSTANCE _hInstance, int iCmdShow, int _width, int _height, st
 		/* Problem: glewInit failed, something is seriously wrong. */
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(error));
 	}
-
-	//glEnable(GL_CULL_FACE);
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
+	
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	
 	//glFrontFace(GL_CCW);
-	//glCullFace(GL_FRONT);
+	
 }
 
 

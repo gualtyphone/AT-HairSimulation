@@ -19,18 +19,7 @@ public:
 	{
 	}
 
-	Vertex(const Vector3& _Position)
-	{
-		this->Position = _Position;
-	}
-
-	Vertex(const Vector3& _Position, const Vector2& _TexCoords)
-	{
-		this->Position = _Position;
-		this->TexCoords = _TexCoords;
-	}
-
-	Vertex(const Vector3& _Position, const Vector2& _TexCoords, const Vector3& _Normal)
+	Vertex(const Vector3& _Position, const Vector2& _TexCoords, const Vector3& _Normal = Vector3(0, 0, 0))
 	{
 		this->Position = _Position;
 		this->TexCoords = _TexCoords;
@@ -60,6 +49,7 @@ public:
 
 	void Draw();
 
+	inline void SetTexture(Texture* _tex) { texture = _tex; }
 protected:
 private:
 	Mesh(const Mesh& otehr);
@@ -69,6 +59,7 @@ private:
 	{
 		POSITION_VB,
 		TEXCOORD_VB,
+		NORMAL_VB,
 		INDEX_VB,
 
 		NUM_BUFFERS
@@ -76,11 +67,13 @@ private:
 
 	std::vector<Vector3> positions;
 	std::vector<Vector2> texCoords;
+	std::vector<Vector3> normals;
 	std::vector<GLuint> indicies;
 
 	GLuint m_vertexArrayObject;
 	GLuint m_vertexArrayBuffers[NUM_BUFFERS];
 	unsigned int m_drawCount;
 
+	Texture* texture = NULL;
 };
 

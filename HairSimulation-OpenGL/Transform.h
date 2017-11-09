@@ -18,6 +18,8 @@ public:
 	inline Vector3& GetRotation() { return Rotation; }
 	inline Vector3& GetScale() { return Scale; }
 
+	inline void Move(Vector3& _dir) { Position = Position + _dir; }
+
 	inline Matrix4 Get() const
 	{
 		Matrix4 posMat = translate(Position);

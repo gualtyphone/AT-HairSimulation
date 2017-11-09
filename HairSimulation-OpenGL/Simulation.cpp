@@ -1,6 +1,7 @@
 #include "Simulation.h"
 #include <math.h>
 #include "guicon.h"
+#include "Input.h"
 
 //This is the start for the simulation code which will all be platform independent because we hide all the platform
 //specific code in main and the equivalent of the GLUT that i'll write
@@ -20,12 +21,23 @@ Simulation::Simulation()
 	mesh = new Mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0]));
 
 	texture = new Texture("./resources/textures/bricks.jpg", "texture_diffuse");
+	texture2 = new Texture("./resources/textures/bricks.jpg", "texture_diffuse");
 
-	model = new Model("./resources/models/monkey3.obj");
+	model2 = new Model("./resources/models/monkey3.obj");
+	model = new Model("./resources/models/TheRock/TheRock2.obj");
 
-	transform = new Transform(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1));
+	transform = new Transform(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(.1, .1, .1));
+	transform2 = new Transform(Vector3(-5, 0, 20), Vector3(0, 0, 0), Vector3(1, 1, 1));
 
-	camera = new Camera(Vector3(0, 0, 10), 1.4, (float)800 / (float)600, 0.01f, 100.0f);
+	camera = new Camera(Vector3(0, 0, 30), 1.0f, (float)800 / (float)600, 0.01f, 1000.0f);
+
+	for (int i = 0; i < 100; i++)
+	{
+		ftl.push_back(new ftl::FTL());
+		ftl[i]->setup(10, 0.5f, Vector3((float)(i-50)/100.0f, 0, 0));
+	}
+	
+	
 }
 
 Simulation::~Simulation()
@@ -44,14 +56,90 @@ void Simulation::Draw()
 	float sinCount = sin(counter);
 	float cosCount = cos(counter);
 	transform->SetPosition(Vector3(sinf(counter), 0, 0));
-	//transform->SetRotation(Vector3(cosCount, sinCount, 0));
+	transform->SetRotation(Vector3(cosCount, sinCount, 0));
 	//transform->SetScale(Vector3(cosCount, cosCount, cosCount));
 
+	if (Input::GetKey(KeyCode::A))
+	{
+		for (int i = 0; i < 100; i++)
+		{
+			ftl[i]->addForce(Vector3(0.05f, 0, 0));
+		}
+	}
+	if (Input::GetKey(KeyCode::S))
+	{
+		transform2->Move(Vector3(0, 0, -0.5f));
+	}
+	if (Input::GetKey(KeyCode::D))
+	{
+		for (int i = 0; i < 100; i++)
+		{
+			ftl[i]->addForce(Vector3(-0.05f,0 , 0));
+		}
+	}
+	for (int i = 0; i < 100; i++)
+	{
+		ftl[i]->addForce(Vector3(0, -0.02f, 0));
+	}
+	
+	if (Input::GetKey(KeyCode::W))
+	{
+		transform2->Move(Vector3(0, 0, 0.5f));
+	}
+
+	if (Input::GetKey(KeyCode::L))
+	{
+		camera->Move(Vector3(0.5f, 0, 0));
+	}
+	if (Input::GetKey(KeyCode::K))
+	{
+		camera->Move(Vector3(0, 0, 0.5f));
+	}
+	if (Input::GetKey(KeyCode::J))
+	{
+		camera->Move(Vector3(-0.5f, 0, 0));
+	}
+	if (Input::GetKey(KeyCode::I))
+	{
+		camera->Move(Vector3(0, 0, -0.5f));
+	}
+
+	if (Input::GetKey(KeyCode::U))
+	{
+		camera->Move(Vector3(0, -0.1f, 0));
+	}
+	if (Input::GetKey(KeyCode::O))
+	{
+		camera->Move(Vector3(0, 0.1f, 0));
+	}
+
+
+	if (Input::GetKey(KeyCode::Q))
+	{
+		transform->Move(Vector3(0, -0.1f, 0));
+	}
+	if (Input::GetKey(KeyCode::E))
+	{
+		transform->Move(Vector3(0, 0.1f, 0));
+	}
+
 	shader->Bind();
-	texture->Bind(0);
+	
 	shader->Update(*transform, *camera);
+	//texture->Bind(0);
 	//mesh->Draw();
 	model->Draw();
+
+	texture2->Bind(0);
+	shader->Update(*transform2, *camera);
+	//mesh->Draw();
+	model2->Draw();
+	for (int i = 0; i < 100; i++)
+	{
+		ftl[i]->update();
+		ftl[i]->draw();
+	}
+	
 
 	counter += 0.01f;
 }
