@@ -3,8 +3,10 @@
 #include <fstream>
 #include <iostream>
 #include "Display.h"
-#include "Transform.h"
 #include "GMath.h"
+#include "Transform.h"
+#include "Camera.h"
+
 
 class Shader
 {
@@ -13,7 +15,7 @@ public:
 	virtual ~Shader();
 
 	void Bind();
-	void Update(const Transform& transform);
+	void Update(const Transform& transform, const Camera& cam);
 
 protected:
 private:

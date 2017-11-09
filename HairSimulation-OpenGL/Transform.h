@@ -29,6 +29,7 @@ public:
 		Matrix4 rotMat = rotZMat * rotYMat * rotXMat;
 		return posMat * rotMat * scaleMat;
 	}
+
 protected:
 private:
 	Vector3 Position;

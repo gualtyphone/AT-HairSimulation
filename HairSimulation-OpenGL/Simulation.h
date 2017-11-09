@@ -4,6 +4,7 @@
 #include "Mesh.h"
 #include "Model.h"
 #include "Transform.h"
+#include "Camera.h"
 
 
 class Simulation
@@ -20,5 +21,6 @@ private:
 	Transform* transform;
 	Mesh* mesh;
 	Model* model;
+	Camera* camera;
 };
 

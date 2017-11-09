@@ -1,5 +1,4 @@
 #include "Shader.h"
-
 #include <crtdbg.h>
 
 static std::string LoadShader(const std::string& fileName);
@@ -44,10 +43,10 @@ void Shader::Bind()
 	glUseProgram(m_program);
 }
 
-void Shader::Update(const Transform & transform)
+void Shader::Update(const Transform & transform, const Camera& cam)
 {
 	glUseProgram(m_program);
-	Matrix4 m = transform.Get();
+	Matrix4 m = cam.GetVewProjection() * transform.Get();
 	glUniformMatrix4fv(m_uniforms[0], 1, GL_TRUE, &(m.Get()[0]));
 	
 }

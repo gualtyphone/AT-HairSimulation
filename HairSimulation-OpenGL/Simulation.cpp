@@ -24,6 +24,8 @@ Simulation::Simulation()
 	model = new Model("./resources/models/monkey3.obj");
 
 	transform = new Transform(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1));
+
+	camera = new Camera(Vector3(0, 0, 10), 1.4, (float)800 / (float)600, 0.01f, 100.0f);
 }
 
 Simulation::~Simulation()
@@ -42,12 +44,12 @@ void Simulation::Draw()
 	float sinCount = sin(counter);
 	float cosCount = cos(counter);
 	transform->SetPosition(Vector3(sinf(counter), 0, 0));
-	transform->SetRotation(Vector3(cosCount, sinCount, 0));
-	transform->SetScale(Vector3(cosCount, cosCount, cosCount));
+	//transform->SetRotation(Vector3(cosCount, sinCount, 0));
+	//transform->SetScale(Vector3(cosCount, cosCount, cosCount));
 
 	shader->Bind();
 	texture->Bind(0);
-	shader->Update(*transform);
+	shader->Update(*transform, *camera);
 	//mesh->Draw();
 	model->Draw();
 

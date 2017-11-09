@@ -134,8 +134,10 @@ Display::Display(HINSTANCE _hInstance, int iCmdShow, int _width, int _height, st
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(error));
 	}
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+	//glEnable(GL_CULL_FACE);
+	//glEnable(GL_DEPTH_TEST);
+	//glFrontFace(GL_CCW);
+	//glCullFace(GL_FRONT);
 }
 
 

@@ -27,6 +27,62 @@ namespace GMath
 			return z;
 		}
 
+		//add two vectors
+		Vector3 operator+(const Vector3 &vec) const
+		{
+			return Vector3(x + vec.x, y + vec.y, z + vec.z);
+		}
+
+		//subtract two vector
+		Vector3 operator-(const Vector3 &vec) const
+		{
+			return Vector3(x - vec.x, y - vec.y, z - vec.z);
+		}
+
+		//normalize this vector
+		void normalize()
+		{
+			float magnitude = sqrtf(x * x + y * y + z * z);
+			x /= magnitude;
+			y /= magnitude;
+			z /= magnitude;
+		}
+
+		static Vector3 normalize(Vector3 &vec)
+		{
+			float magnitude = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+
+			return Vector3(vec.x / magnitude, vec.y / magnitude, vec.z / magnitude);
+		}
+
+		//calculate and return dot product
+		float dot(const Vector3 &vec) const
+		{
+			return x * vec.x + y * vec.y + z * vec.z;
+		}
+
+		//calculate and return cross product
+		Vector3 cross(const Vector3 &vec) const
+		{
+			return Vector3(y * vec.z - z * vec.y,
+						   z * vec.x - x * vec.z,
+						   x * vec.y - y * vec.x);
+		}
+
+		//calculate and return dot product
+		static float dot(const Vector3 &a, const Vector3 &b)
+		{
+			return a.x * b.x + a.y * b.y + a.z * b.z;
+		}
+
+		//calculate and return cross product
+		static Vector3 cross(const Vector3 &a, const Vector3 &b)
+		{
+			return Vector3(a.y * b.z - a.z * b.y,
+						   a.z * b.x - a.x * b.z,
+						   a.x * b.y - a.y * b.x);
+		}
+
 	protected:
 	private:
 		float x;
@@ -83,6 +139,8 @@ namespace GMath
 	Matrix4 rotateAroundZAxis(float);
 	Matrix4 rotate(Quaternion);
 	Matrix4 scale(Vector3);
+	Matrix4* perspective(float fov, float aspect, float zNear, float zFar);
+	Matrix4 lookAt(Vector3 position, Vector3 other , Vector3 up);
 
 	class Matrix4
 	{
@@ -95,7 +153,7 @@ namespace GMath
 
 		~Matrix4();
 
-		friend Matrix4 operator*(Matrix4&, Matrix4&);
+		friend Matrix4 operator*(const Matrix4&, const Matrix4&);
 
 		inline float* Get() const
 		{

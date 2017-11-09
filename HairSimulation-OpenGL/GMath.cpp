@@ -89,7 +89,7 @@ GMath::Matrix4::~Matrix4()
 	delete[] m;
 }
 
-Matrix4 GMath::operator*(Matrix4& a, Matrix4& b)
+Matrix4 GMath::operator*(const Matrix4& a, const Matrix4& b)
 {
 	return Matrix4(
 		a.Get()[0] * b.Get()[0] + a.Get()[1] * b.Get()[4] + a.Get()[2] * b.Get()[8] + a.Get()[3] * b.Get()[12],
@@ -168,6 +168,35 @@ Matrix4 GMath::scale(Vector3 v)
 				   0, v.GetY(), 0, 0,
 				   0, 0, v.GetZ(), 0,
 				   0, 0, 0,        1);
+}
+Matrix4* GMath::perspective(float fov, float aspect, float zNear, float zFar)
+{
+	//assert(abs(aspect - std::numeric_limits<float>::epsilon()) > static_cast<float>(0));
+
+	float const tanHalfFovy = tan(fov / 2.0f);
+
+	float _00 = 1.0f / (aspect * tanHalfFovy);
+	float _11 = 1.0f / (tanHalfFovy);
+	float _22 = zFar / (zNear - zFar);
+	float _23 = -1.0f;
+	float _32 = -(zFar * zNear) / (zFar - zNear);
+	return new Matrix4(_00, 0, 0, 0,
+				   0, _11, 0, 0,
+				   0, 0, _22, _23,
+				   0, 0, _32, 1);
+}
+Matrix4 GMath::lookAt(Vector3 position, Vector3 other, Vector3 up)
+{
+	Vector3 zaxis = Vector3::normalize(other - position);
+	Vector3	xaxis =  Vector3::normalize(Vector3::cross(zaxis, up));
+	Vector3	yaxis =  Vector3::cross(xaxis, zaxis);
+	//lil cheat to inver vectors
+	Vector3 a(0, 0, 0);
+
+	return Matrix4(xaxis.GetX(), yaxis.GetX(), -zaxis.GetX(),  0,
+				   xaxis.GetY(), yaxis.GetY(), -zaxis.GetY(),  0,
+				   xaxis.GetZ(), yaxis.GetZ(), -zaxis.GetZ(),  0,
+-Vector3::dot(xaxis, position), -Vector3::dot(yaxis, position),  Vector3::dot(zaxis,position),  1);
 }
 #pragma endregion
 

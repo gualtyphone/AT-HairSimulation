@@ -129,6 +129,7 @@
     <ClCompile Include="GMath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="guicon.h" />
     <ClInclude Include="Mesh.h" />
