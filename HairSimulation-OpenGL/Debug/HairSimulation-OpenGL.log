@@ -1,3 +1,5 @@
-﻿  Simulation.cpp
+﻿  main.cpp
+  Simulation.cpp
 c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(30): warning C4305: 'argument': truncation from 'double' to 'float'
+  Generating Code...
   HairSimulation-OpenGL.vcxproj -> C:\Users\Gualty\documents\visual studio 2017\Projects\HairSimulation-OpenGL\Debug\HairSimulation-OpenGL.exe

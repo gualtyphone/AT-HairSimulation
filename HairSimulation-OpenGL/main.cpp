@@ -14,10 +14,7 @@
 using namespace std;
 #endif
 #include "guicon.h"
-
-
 #include <crtdbg.h>
-
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
