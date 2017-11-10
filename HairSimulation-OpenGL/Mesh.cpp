@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices)
+Mesh::Mesh(std::vector<Vertex> _vertices, std::vector<GLuint> indices)
 {
 	m_drawCount = indices.size();
 
@@ -9,11 +9,12 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices)
 	//load vertex array
 	glBindVertexArray(m_vertexArrayObject);
 
-	for (unsigned int i = 0; i < vertices.size(); i++)
+	for (unsigned int i = 0; i < _vertices.size(); i++)
 	{
-		positions.push_back(*vertices[i].GetPos());
-		normals.push_back(*vertices[i].GetNormal());
-		texCoords.push_back(*vertices[i].GetTexCoord());
+		vertices.push_back(Vertex(_vertices[i]));
+		positions.push_back(*_vertices[i].GetPos());
+		normals.push_back(*_vertices[i].GetNormal());
+		texCoords.push_back(*_vertices[i].GetTexCoord());
 	}
 
 	for (int i = 0; i < indices.size(); i++)
@@ -23,19 +24,19 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices)
 
 	glGenBuffers(NUM_BUFFERS, m_vertexArrayBuffers);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[POSITION_VB]);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(positions[0]), &positions[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(positions[0]), &positions[0], GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[TEXCOORD_VB]);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(texCoords[0]), &texCoords[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(texCoords[0]), &texCoords[0], GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[NORMAL_VB]);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(normals[0]), &normals[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(normals[0]), &normals[0], GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);

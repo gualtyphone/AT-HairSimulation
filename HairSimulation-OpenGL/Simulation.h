@@ -6,7 +6,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "FTL.h"
-
+#include "HairyModel.h"
 
 class Simulation
 {
@@ -25,6 +25,7 @@ private:
 	Mesh* mesh;
 	Model* model;
 	Model* model2;
+	HairyModel* model300;
 	Camera* camera;
 	std::vector<ftl::FTL*> ftl;
 };

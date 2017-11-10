@@ -25,18 +25,21 @@ Simulation::Simulation()
 	texture2 = new Texture("./resources/textures/bricks.jpg", "texture_diffuse");
 
 	model2 = new Model("./resources/models/monkey3.obj");
+	model300 = new HairyModel("./resources/models/Cap300.obj");
 	model = new Model("./resources/models/TheRock/TheRock2.obj");
+
+	model300->AddHair();
 
 	transform = new Transform(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(.1, .1, .1));
 	transform2 = new Transform(Vector3(-5, 0, 20), Vector3(0, 0, 0), Vector3(1, 1, 1));
 
 	camera = new Camera(Vector3(0, 0, 30), 1.0f, (float)800 / (float)600, 0.01f, 1000.0f);
 
-	for (int i = 0; i < 300; i++)
+	/*for (int i = 0; i < 300; i++)
 	{
 		ftl.push_back(new ftl::FTL());
-		ftl[i]->setup(10, 0.5f, Vector3((float)(i-150)/50.0f, 0, 0));
-	}
+		ftl[i]->setup(10, Vector3(0, 00.5f, 0), Vector3((float)(i-150)/50.0f, 0, 0));
+	}*/
 	
 	
 }
@@ -78,11 +81,11 @@ void Simulation::Draw()
 			ftl[i]->addForce(Vector3(Random::Range(0.4f, 0.6f),0 , 0));
 		}
 	}
-	for (int i = 0; i < 300; i++)
+	/*for (int i = 0; i < 300; i++)
 	{
 		ftl[i]->addForce(Vector3(0, -0.15f, 0));
 	}
-	
+	*/
 	if (Input::GetKey(KeyCode::W))
 	{
 		transform2->Move(Vector3(0, 0, 0.5f));
@@ -129,17 +132,18 @@ void Simulation::Draw()
 	shader->Update(*transform, *camera);
 	//texture->Bind(0);
 	model->Draw();
+	model300->Draw();
 
 	texture2->Bind(0);
 	shader->Update(*transform2, *camera);
 	model2->Draw();
 
 
-	for (int i = 0; i < 300; i++)
-	{
-		ftl[i]->update();
-		ftl[i]->draw();
-	}
+	//for (int i = 0; i < 300; i++)
+	//{
+	//	ftl[i]->update();
+	//	ftl[i]->draw();
+	//}
 	
 
 	counter += 0.01f;

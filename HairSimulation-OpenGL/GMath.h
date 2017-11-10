@@ -27,6 +27,11 @@ namespace GMath
 			return z;
 		}
 
+		inline float magnitude() const
+		{
+			return sqrt(x*x + y*y + z*z);
+		}
+
 		//add two vectors
 		Vector3 operator+(const Vector3 &vec) const
 		{

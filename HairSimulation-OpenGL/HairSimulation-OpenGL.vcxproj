@@ -119,6 +119,7 @@
   <ItemGroup>
     <ClCompile Include="FTL.cpp" />
     <ClCompile Include="guicon.cpp" />
+    <ClCompile Include="HairyModel.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Display.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Display.h" />
     <ClInclude Include="FTL.h" />
     <ClInclude Include="guicon.h" />
+    <ClInclude Include="HairyModel.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />

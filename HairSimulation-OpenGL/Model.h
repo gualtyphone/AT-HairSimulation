@@ -18,10 +18,9 @@ public:
 	Model(std::string filePath);
 	~Model();
 
-	void Draw();
+	virtual void Draw();
 
 protected:
-private:
 	void loadModel(std::string path);
 	void processNode(aiNode* node, const aiScene* scene);
 	Mesh* processMesh (aiMesh* mesh, const aiScene* scene);
@@ -30,5 +29,7 @@ private:
 	std::string directory;
 	std::vector<Mesh*> meshes;
 	std::vector<Texture*> texturesLoaded;
+
+private:
 };
 

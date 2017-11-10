@@ -25,7 +25,7 @@ namespace ftl
 	{
 	public:
 		FTL();
-		void setup(int num, float d, GMath::Vector3 pos);
+		void setup(int num, GMath::Vector3 d, GMath::Vector3 pos);
 		void addForce(GMath::Vector3 f);
 		void update();
 		void draw();

@@ -27,17 +27,17 @@ namespace ftl
 		:len(10)
 	{}
 
-	void FTL::setup(int num, float d, GMath::Vector3 pos)
+	void FTL::setup(int num, GMath::Vector3 dir, GMath::Vector3 pos)
 	{
 		float dim = 50;
-		len = d;
+		len = dir.magnitude();
 		//GMath::Vector3 pos(0, 0, 0);
 		float mass = Random::Range(0.2f, 0.8f);
 		for (int i = 0; i < num; ++i)
 		{
 			Particle* p = new Particle(pos, mass); //rx_random(1.0f, 10.0f));
 			particles.push_back(p);
-			pos = pos + GMath::Vector3(0, -d, 0);
+			pos = pos + dir;
 		}
 
 		particles[0]->enabled = false;

@@ -50,6 +50,8 @@ public:
 	void Draw();
 
 	inline void SetTexture(Texture* _tex) { texture = _tex; }
+
+	std::vector<Vertex> vertices;
 protected:
 private:
 	Mesh(const Mesh& otehr);

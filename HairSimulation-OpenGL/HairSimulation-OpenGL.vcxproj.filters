@@ -54,6 +54,9 @@
     <ClCompile Include="FTL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HairyModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Simulation.h">
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HairyModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
