@@ -1,6 +1,7 @@
 #include "FTL.h"
 #include <math.h>
 #include "GL\glew.h"
+#include "Random.h"
 
 namespace ftl
 {
@@ -31,7 +32,7 @@ namespace ftl
 		float dim = 50;
 		len = d;
 		//GMath::Vector3 pos(0, 0, 0);
-		float mass = 1.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (10.0f - 1.0f)));
+		float mass = Random::Range(0.2f, 0.8f);
 		for (int i = 0; i < num; ++i)
 		{
 			Particle* p = new Particle(pos, mass); //rx_random(1.0f, 10.0f));

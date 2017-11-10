@@ -2,6 +2,7 @@
 #include <math.h>
 #include "guicon.h"
 #include "Input.h"
+#include "Random.h"
 
 //This is the start for the simulation code which will all be platform independent because we hide all the platform
 //specific code in main and the equivalent of the GLUT that i'll write
@@ -31,10 +32,10 @@ Simulation::Simulation()
 
 	camera = new Camera(Vector3(0, 0, 30), 1.0f, (float)800 / (float)600, 0.01f, 1000.0f);
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 300; i++)
 	{
 		ftl.push_back(new ftl::FTL());
-		ftl[i]->setup(10, 0.5f, Vector3((float)(i-50)/100.0f, 0, 0));
+		ftl[i]->setup(10, 0.5f, Vector3((float)(i-150)/50.0f, 0, 0));
 	}
 	
 	
@@ -61,9 +62,9 @@ void Simulation::Draw()
 
 	if (Input::GetKey(KeyCode::A))
 	{
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 300; i++)
 		{
-			ftl[i]->addForce(Vector3(0.05f, 0, 0));
+			ftl[i]->addForce(Vector3(-Random::Range(0.4f, 0.6f), 0, 0));
 		}
 	}
 	if (Input::GetKey(KeyCode::S))
@@ -72,14 +73,14 @@ void Simulation::Draw()
 	}
 	if (Input::GetKey(KeyCode::D))
 	{
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 300; i++)
 		{
-			ftl[i]->addForce(Vector3(-0.05f,0 , 0));
+			ftl[i]->addForce(Vector3(Random::Range(0.4f, 0.6f),0 , 0));
 		}
 	}
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 300; i++)
 	{
-		ftl[i]->addForce(Vector3(0, -0.02f, 0));
+		ftl[i]->addForce(Vector3(0, -0.15f, 0));
 	}
 	
 	if (Input::GetKey(KeyCode::W))
@@ -127,14 +128,14 @@ void Simulation::Draw()
 	
 	shader->Update(*transform, *camera);
 	//texture->Bind(0);
-	//mesh->Draw();
 	model->Draw();
 
 	texture2->Bind(0);
 	shader->Update(*transform2, *camera);
-	//mesh->Draw();
 	model2->Draw();
-	for (int i = 0; i < 100; i++)
+
+
+	for (int i = 0; i < 300; i++)
 	{
 		ftl[i]->update();
 		ftl[i]->draw();
