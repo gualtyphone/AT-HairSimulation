@@ -1,5 +1,5 @@
 #include "Input.h"
-
+#include <Windowsx.h>
 Input::Input()
 {}
 
@@ -17,7 +17,11 @@ void Input::HandleKeyEvent(UINT msg, WPARAM wparam, LPARAM lparam)
 }
 
 void Input::HandleMouseEvent(UINT msg, WPARAM wparam, LPARAM lparam)
-{}
+{
+	PreviousMousePosition = MousePosition;
+	MousePosition.x = GET_X_LPARAM(lparam);
+	MousePosition.y = GET_Y_LPARAM(lparam);
+}
 
 bool Input::GetKeyDown(KeyCode code)
 {

@@ -3,6 +3,8 @@
 
 #include "GMath.h"
 #include <vector>
+#include "Transform.h"
+#include "SphereCollider.h"
 
 namespace ftl
 {
@@ -25,12 +27,18 @@ namespace ftl
 	{
 	public:
 		FTL();
-		void setup(int num, GMath::Vector3 d, GMath::Vector3 pos);
+		void setup(int num, GMath::Vector3 d, GMath::Vector3 pos, Transform* follow = nullptr);
 		void addForce(GMath::Vector3 f);
 		void update();
 		void draw();
+
+		void Collide(SphereCollider coll);
+
 	public:
 		float len;
+		GMath::Vector3 pos;
+		GMath::Vector3 originalPos;
+		Transform* follow;
 		std::vector<Particle*> particles;
 		GMath::Vector3 color;
 	};

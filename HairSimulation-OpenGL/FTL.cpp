@@ -2,6 +2,7 @@
 #include <math.h>
 #include "GL\glew.h"
 #include "Random.h"
+#include "Input.h"
 
 namespace ftl
 {
@@ -27,8 +28,11 @@ namespace ftl
 		:len(10)
 	{}
 
-	void FTL::setup(int num, GMath::Vector3 dir, GMath::Vector3 pos)
+	void FTL::setup(int num, GMath::Vector3 dir, GMath::Vector3 _pos, Transform* _follow)
 	{
+		pos = _pos;
+		originalPos = _pos;
+		follow = _follow;
 		float dim = 50;
 		len = dir.magnitude();
 		//GMath::Vector3 pos(0, 0, 0);
@@ -47,10 +51,10 @@ namespace ftl
 	{
 		for (std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it)
 		{
-			Particle* p = *it;
-			if (p->enabled)
+			//Particle* p = *it;
+			if ((*it)->enabled)
 			{
-				p->forces = p->forces + f;
+				(*it)->forces = (*it)->forces + f;
 			}
 		}
 	}
@@ -58,6 +62,15 @@ namespace ftl
 	void FTL::update()
 	{
 		float dt = 1.0f / 20.0f;
+
+		if (follow != nullptr)
+		{
+			int a = 0;
+			particles[0]->position = GMath::transformPoint(originalPos, follow->Get());
+			int b = 3;
+		}
+		
+		addForce(Vector3(0, -0.01f, 0));
 
 		// update velocities
 		for (std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it)
@@ -68,7 +81,7 @@ namespace ftl
 				p->tmp_position = p->position;
 				continue;
 			}
-			p->velocity = p->velocity + (p->forces * p->inv_mass) * dt;
+			p->velocity = p->velocity + (p->forces * p->inv_mass) /** dt*/;
 			p->tmp_position  = p->tmp_position + (p->velocity * dt);
 			p->forces = GMath::Vector3();
 			p->velocity = p->velocity * 0.99;
@@ -96,7 +109,7 @@ namespace ftl
 			{
 				continue;
 			}
-			pa->velocity = ((pa->tmp_position - pa->position) / dt) + (pb->d / dt) * 0.9f;
+			pa->velocity = ((pa->tmp_position - pa->position) / dt) + (pb->d / dt) * .9f;
 			pa->position = pa->tmp_position;
 		}
 
@@ -127,6 +140,22 @@ namespace ftl
 		}
 		glEnd();
 		glFlush();
+	}
+
+	void FTL::Collide(SphereCollider coll)
+	{
+		for each (auto p in particles)
+		{
+			if (!p->enabled)
+			{
+				continue;
+			}
+			if ((p->position - coll.pos).magnitude() <= coll.radius)
+			{
+				p->forces = (p->position - coll.pos)/10;
+			}
+		}
+	
 	}
 
 }

@@ -149,6 +149,7 @@ static bool KeyboardState[KeyCode::END_KEYS];
 static bool PreviousKeyboardState[KeyCode::END_KEYS];
 
 static Vector2 MousePosition;
+static Vector2 PreviousMousePosition;
 
 class Input
 {

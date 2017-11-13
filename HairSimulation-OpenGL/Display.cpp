@@ -51,15 +51,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 			}
 			return 0;
 		case WM_MOUSEMOVE:
-			switch (wparam)
-			{
-				case VK_ESCAPE:
-					PostQuitMessage(0);
-					break;
-				default:
-					Input::HandleMouseEvent(message, wparam, lparam);
-					break;
-			}
+			Input::HandleMouseEvent(message, wparam, lparam);
 			return 0;
 		case WM_DESTROY:
 			PostQuitMessage(0);

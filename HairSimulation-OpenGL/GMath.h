@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include <assert.h>
 namespace GMath
 {
 	class Matrix4;
@@ -62,6 +63,11 @@ namespace GMath
 			return Vector3(x - vec.x, y - vec.y, z - vec.z);
 		}
 
+		bool operator==(const Vector3 &vec) const
+		{
+			return x == vec.x && y == vec.y && z == vec.z;
+		}
+
 		//normalize this vector
 		void normalize()
 		{
@@ -119,11 +125,11 @@ namespace GMath
 		Vector2();
 		Vector2(float _x, float _y);
 		~Vector2();
-
-	protected:
-	private:
 		float x;
 		float y;
+	protected:
+	private:
+
 	};
 
 	class Quaternion
@@ -182,9 +188,27 @@ namespace GMath
 		{
 			return m;
 		}
+		inline float Get(int point) const
+		{
+			assert(point >= 0 && point < 16);
+			return m[point];
+		}
 
 	private:
 		float* m;
 	};
 
+
+	inline static Vector3 transformPoint(Vector3 a, Matrix4& mat)
+	{
+		float x = a.GetX();
+		float y = a.GetY();
+		float z = a.GetZ();
+		float w = 1.0f;
+
+		float resX = mat.Get(0)*x + mat.Get(1)*y + mat.Get(2)*z + mat.Get(3)*w;
+		float resY = mat.Get(4)*x + mat.Get(5)*y + mat.Get(6)*z + mat.Get(7)*w;
+		float resZ = mat.Get(8)*x + mat.Get(9)*y + mat.Get(10)*z + mat.Get(11)*w;
+		return Vector3(resX, resY, resZ);
+	}
 }

@@ -104,6 +104,9 @@
     <ClInclude Include="HairyModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\basicShader.vs">

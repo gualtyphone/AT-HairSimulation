@@ -2,6 +2,7 @@
 #include "Model.h";
 #include <vector>;
 #include "FTL.h";
+#include "SphereCollider.h"
 
 
 class HairyModel : Model
@@ -11,10 +12,12 @@ public:
 	HairyModel::~HairyModel()
 	{}
 
-	void AddHair();
+	void AddHair(Transform* transform = nullptr);
 
 	virtual void Draw() override;
 
+	virtual void Collide(SphereCollider  coll);
+	
 protected:
 private:
 	std::vector<ftl::FTL*> hair;

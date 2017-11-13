@@ -71,9 +71,9 @@ Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		if (mesh->HasNormals())
 		{
 
-			Vector3 normal(mesh->mVertices[i].x,
-						   mesh->mVertices[i].y,
-						   mesh->mVertices[i].z);
+			Vector3 normal(mesh->mNormals[i].x,
+						   mesh->mNormals[i].y,
+						   mesh->mNormals[i].z);
 			vertex.SetNormal(normal);
 		}
 		else

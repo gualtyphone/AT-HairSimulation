@@ -28,10 +28,17 @@ Simulation::Simulation()
 	model300 = new HairyModel("./resources/models/Cap300.obj");
 	model = new Model("./resources/models/TheRock/TheRock2.obj");
 
-	model300->AddHair();
+	
 
 	transform = new Transform(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(.1, .1, .1));
 	transform2 = new Transform(Vector3(-5, 0, 20), Vector3(0, 0, 0), Vector3(1, 1, 1));
+	transform3 = new Transform(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1));
+	transform4 = new Transform(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1));
+
+	model300->AddHair(transform);
+
+	//head.pos = Vector3(0.0f, 1.0f, 0.0f);
+	head.radius = 9.0f;
 
 	camera = new Camera(Vector3(0, 0, 30), 1.0f, (float)800 / (float)600, 0.01f, 1000.0f);
 
@@ -54,41 +61,37 @@ void Simulation::Tick()
 
 }
 float counter = 0.0f;
-
+bool count;
 void Simulation::Draw()
 {
+
 	float sinCount = sin(counter);
 	float cosCount = cos(counter);
-	transform->SetPosition(Vector3(sinf(counter), 0, 0));
-	transform->SetRotation(Vector3(cosCount, sinCount, 0));
+	//transform->SetPosition(Vector3(sinf(counter) * 5, 0, 0));
+	//transform3->SetPosition(Vector3(sinf(counter) * 5, 0, 0));
+
+	//transform->SetRotation(Vector3(sinCount, cosCount, 0));
+	//transform3->SetRotation(Vector3(sinCount, cosCount, 0));
+
+	head.pos = transform4->GetPosition();
 	//transform->SetScale(Vector3(cosCount, cosCount, cosCount));
+
+	if (Input::GetKey(KeyCode::S))
+	{
+		transform->Move(Vector3(0, 0, -0.5f));
+	}
+	if (Input::GetKey(KeyCode::W))
+	{
+		transform->Move(Vector3(0, 0, 0.5f));
+	}
 
 	if (Input::GetKey(KeyCode::A))
 	{
-		for (int i = 0; i < 300; i++)
-		{
-			ftl[i]->addForce(Vector3(-Random::Range(0.4f, 0.6f), 0, 0));
-		}
-	}
-	if (Input::GetKey(KeyCode::S))
-	{
-		transform2->Move(Vector3(0, 0, -0.5f));
+		transform->Move(Vector3(0.5f, 0, 0));
 	}
 	if (Input::GetKey(KeyCode::D))
 	{
-		for (int i = 0; i < 300; i++)
-		{
-			ftl[i]->addForce(Vector3(Random::Range(0.4f, 0.6f),0 , 0));
-		}
-	}
-	/*for (int i = 0; i < 300; i++)
-	{
-		ftl[i]->addForce(Vector3(0, -0.15f, 0));
-	}
-	*/
-	if (Input::GetKey(KeyCode::W))
-	{
-		transform2->Move(Vector3(0, 0, 0.5f));
+		transform->Move(Vector3(-0.5f, 0, 0));
 	}
 
 	if (Input::GetKey(KeyCode::L))
@@ -127,16 +130,23 @@ void Simulation::Draw()
 		transform->Move(Vector3(0, 0.1f, 0));
 	}
 
+
+
 	shader->Bind();
-	
+	model300->Collide(head);
 	shader->Update(*transform, *camera);
 	//texture->Bind(0);
 	model->Draw();
+	shader->Update(*transform4, *camera);
 	model300->Draw();
+	
+	shader->Update(*transform4, *camera);
+	head.draw();
 
 	texture2->Bind(0);
 	shader->Update(*transform2, *camera);
 	model2->Draw();
+
 
 
 	//for (int i = 0; i < 300; i++)
@@ -145,6 +155,8 @@ void Simulation::Draw()
 	//	ftl[i]->draw();
 	//}
 	
-
-	counter += 0.01f;
+	if (Input::GetKeyDown(KeyCode::A))
+		count = !count;
+	if (count)
+		counter += 0.01f;
 }
