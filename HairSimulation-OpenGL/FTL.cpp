@@ -140,9 +140,29 @@ namespace ftl
 		}
 		glEnd();
 		glFlush();
+
+		glPointSize(1.0f);
+		glBegin(GL_POINTS);
+		for (std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it)
+		{
+			Particle* p = *it;
+
+			if (!p->enabled)
+			{
+				glColor3f(1.0f, 1.2f, 1.2f);
+			}
+			else
+			{
+				glColor3f(1.0f, 1.0f, 1.0f);
+			}
+
+			glVertex3f(p->position.GetX(), p->position.GetY(), p->position.GetZ());
+		}
+		glEnd();
+		glFlush();
 	}
 
-	void FTL::Collide(SphereCollider coll)
+	void FTL::Collide(SphereCollider& coll)
 	{
 		for each (auto p in particles)
 		{
@@ -150,9 +170,9 @@ namespace ftl
 			{
 				continue;
 			}
-			if ((p->position - coll.pos).magnitude() <= coll.radius)
+			if ((p->position - coll.transform.GetPosition()).magnitude() <= coll.radius)
 			{
-				p->forces = (p->position - coll.pos)/10;
+				p->forces = (p->position - coll.transform.GetPosition())/10;
 			}
 		}
 	

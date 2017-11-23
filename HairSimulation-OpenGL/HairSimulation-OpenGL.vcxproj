@@ -117,7 +117,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CylinderCollider.cpp" />
     <ClCompile Include="FTL.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="guicon.cpp" />
     <ClCompile Include="HairyModel.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -133,8 +136,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CylinderCollider.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="FTL.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="guicon.h" />
     <ClInclude Include="HairyModel.h" />
     <ClInclude Include="Input.h" />

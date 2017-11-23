@@ -50,6 +50,22 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 					break;
 			}
 			return 0;
+		case WM_LBUTTONDOWN:
+				Input::HandleMouseEvent(message, wparam, lparam);
+				break;
+			return 0;
+		case WM_RBUTTONDOWN:
+			Input::HandleMouseEvent(message, wparam, lparam);
+			break;
+			return 0;
+		case WM_LBUTTONUP:
+			Input::HandleMouseEvent(message, wparam, lparam);
+			break;
+			return 0;
+		case WM_RBUTTONUP:
+			Input::HandleMouseEvent(message, wparam, lparam);
+			break;
+			return 0;
 		case WM_MOUSEMOVE:
 			Input::HandleMouseEvent(message, wparam, lparam);
 			return 0;
@@ -216,7 +232,7 @@ void Display::StartDraw()
 			  0, 1, 0);
 
 	// 4. modelling transformation and drawing
-	glClearColor(0.0, 0.03, 0.25, 0);
+	glClearColor(0.0, 0.00, 0.00, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

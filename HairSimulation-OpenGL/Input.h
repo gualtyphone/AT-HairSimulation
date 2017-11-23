@@ -5,15 +5,18 @@ using namespace GMath;
 
 enum KeyCode
 {
-	None = 0,
-	Backspace = 1,
+	//None = 0,
+	Mouse0 = VK_LBUTTON,
+	Mouse1 = VK_RBUTTON,
+	Backspace = VK_BACK,
 	Delete = VK_DELETE,
 	Tab = VK_TAB,
 	Clear = VK_CLEAR,
 	Return = VK_RETURN,
+	LeftShift = VK_SHIFT,
 	Pause = VK_PAUSE,
 	EscapeKey = VK_ESCAPE,
-	//Space = VK_ESCAPE,
+	Space = VK_SPACE,
 	/*Keypad0 = VK_ESCAPE,
 	Keypad1 = VK_ESCAPE,
 	Keypad2 = VK_ESCAPE,
@@ -121,9 +124,8 @@ enum KeyCode
 	Numlock	Numlock key.
 	CapsLock	Capslock key.
 	ScrollLock	Scroll lock key.
-	RightShift	Right shift key.
-	LeftShift	Left shift key.
-	RightControl	Right Control key.
+	RightShift	Right shift key.*/
+	/*RightControl	Right Control key.
 	LeftControl	Left Control key.
 	RightAlt	Right Alt key.
 	LeftAlt	Left Alt key.
@@ -138,9 +140,8 @@ enum KeyCode
 	Print	Print key.
 	SysReq	Sys Req key.
 	Break	Break key.
-	Menu	Menu key.
-	Mouse0	The Left(or primary) mouse button.
-	Mouse1	Right mouse button(or secondary mouse button).*/
+	Menu	Menu key.*/
+
 
 	END_KEYS
 };
@@ -150,6 +151,8 @@ static bool PreviousKeyboardState[KeyCode::END_KEYS];
 
 static Vector2 MousePosition;
 static Vector2 PreviousMousePosition;
+
+static bool mouseMoved = false;
 
 class Input
 {
@@ -164,7 +167,9 @@ public:
 	static bool GetKey(KeyCode code);
 
 	static Vector2 GetMousePosition();
+	static Vector2 GetPreviousMousePosition();
 
+	static bool MouseMoved();
 protected:
 private:
 

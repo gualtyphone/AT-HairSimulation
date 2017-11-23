@@ -45,7 +45,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR szCmdLine
 
 	while (!display->isClosed())
 	{
-		sim->Tick();
+		sim->Update();
 		display->StartDraw();
 		sim->Draw();
 		display->EndDraw();

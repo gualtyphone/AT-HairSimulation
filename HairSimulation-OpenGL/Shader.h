@@ -12,15 +12,19 @@ class Shader
 {
 public:
 	Shader(std::string& fileName);
+	Shader(std::string& fileName, Camera* _camera);
 	virtual ~Shader();
 
 	void Bind();
 	void Update(const Transform& transform, const Camera& cam);
+	void Update(const Transform& transform);
 
 protected:
 private:
 	//Shader(const Shader& other);
 	//void operator=(const Shader& other);
+	std::string shaderName;
+	Camera* camera;
 
 	enum
 	{
@@ -40,5 +44,6 @@ private:
 	GLuint m_program;
 	GLuint m_shaders[NUM_SHADERS];
 	GLuint m_uniforms[NUM_UNIFORM];
+
 };
 

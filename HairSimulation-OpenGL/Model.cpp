@@ -78,7 +78,7 @@ Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		}
 		else
 		{
-			//vertex.Normal = Vector3(0.0, 0.0, 0.0);
+			vertex.SetNormal(Vector3(0.0, 1.0, 0.0));
 		}
 		if (mesh->mTextureCoords[0])
 		{

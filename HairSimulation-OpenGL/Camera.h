@@ -12,8 +12,11 @@ public:
 		position = pos;
 		forward = Vector3(0, 0, 1);
 		up = Vector3(0, 1, 0);
+		right = Vector3(1, 0, 0);
 	}
 	~Camera();
+
+	void Update();
 
 	void Move(Vector3 direction)
 	{
@@ -39,6 +42,7 @@ private:
 	Matrix4* persp;
 	Vector3 forward;
 	Vector3 up;
-
+	Vector3 right;
+	Vector3 rotation;
 };
 

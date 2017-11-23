@@ -41,6 +41,10 @@ void HairyModel::Draw()
 	//	}
 	//}
 	//Model::Draw();
+	for each (auto collider in colliders)
+	{
+		Collide(*collider);
+	}
 	for (int i = 0; i < hair.size(); i++)
 	{
 		hair[i]->update();
@@ -48,11 +52,10 @@ void HairyModel::Draw()
 	}
 }
 
-void HairyModel::Collide(SphereCollider coll)
+void HairyModel::Collide(SphereCollider& coll)
 {
 	for each (auto strand in hair)
 	{
 		strand->Collide(coll);
 	}
-
 }

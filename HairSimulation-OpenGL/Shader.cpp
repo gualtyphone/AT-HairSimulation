@@ -7,6 +7,7 @@ static GLuint CreateShader(const std::string& text, GLenum shaderType);
 
 Shader::Shader(std::string& fileName)
 {
+	shaderName = fileName;
 	m_program = glCreateProgram();
 	m_shaders[VERTEX_SHADER] = CreateShader(LoadShader(fileName + ".vs"), GL_VERTEX_SHADER);
 	m_shaders[FRAGMENT_SHADER] = CreateShader(LoadShader(fileName + ".fs"), GL_FRAGMENT_SHADER);
@@ -27,6 +28,12 @@ Shader::Shader(std::string& fileName)
 	CheckShaderError(m_program, GL_VALIDATE_STATUS, true, "Error: Shader program is invalid: ");
 
 	m_uniforms[0] = glGetUniformLocation(m_program, "transform");
+}
+
+Shader::Shader(std::string & fileName, Camera * _camera)
+	:Shader(fileName)
+{
+	camera = _camera;
 }
 
 Shader::~Shader()
@@ -50,6 +57,11 @@ void Shader::Update(const Transform & transform, const Camera& cam)
 	Matrix4 m = cam.GetVewProjection() * transform.Get();
 	glUniformMatrix4fv(m_uniforms[0], 1, GL_TRUE, &(m.Get()[0]));
 	
+}
+
+void Shader::Update(const Transform & transform)
+{
+	Update(transform, *camera);
 }
 
 static GLuint CreateShader(const std::string& text, GLenum shaderType)

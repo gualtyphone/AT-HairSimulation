@@ -32,7 +32,7 @@ namespace ftl
 		void update();
 		void draw();
 
-		void Collide(SphereCollider coll);
+		void Collide(SphereCollider& coll);
 
 	public:
 		float len;

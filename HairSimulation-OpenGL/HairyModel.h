@@ -5,7 +5,7 @@
 #include "SphereCollider.h"
 
 
-class HairyModel : Model
+class HairyModel : public Model
 {
 public:
 	HairyModel(std::string fileName);
@@ -16,10 +16,15 @@ public:
 
 	virtual void Draw() override;
 
-	virtual void Collide(SphereCollider  coll);
+	virtual void Collide(SphereCollider&  coll);
 	
+	inline void AddCollider(SphereCollider* coll)
+	{
+		colliders.push_back(coll);
+	}
 protected:
 private:
 	std::vector<ftl::FTL*> hair;
+	std::vector<SphereCollider*> colliders;
 };
 

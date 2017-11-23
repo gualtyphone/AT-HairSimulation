@@ -4,6 +4,7 @@
 namespace GMath
 {
 	class Matrix4;
+	class Vector4;
 	class Vector3;
 	class Vector2;
 	class Quaternion;
@@ -127,6 +128,11 @@ namespace GMath
 		~Vector2();
 		float x;
 		float y;
+
+		Vector2 operator-(const Vector2 &vec) const
+		{
+			return Vector2(x - vec.x, y - vec.y);
+		}
 	protected:
 	private:
 
@@ -183,7 +189,7 @@ namespace GMath
 		~Matrix4();
 
 		friend Matrix4 operator*(const Matrix4&, const Matrix4&);
-
+		friend Matrix4 operator*(const Matrix4&, const Vector4&);
 		inline float* Get() const
 		{
 			return m;
