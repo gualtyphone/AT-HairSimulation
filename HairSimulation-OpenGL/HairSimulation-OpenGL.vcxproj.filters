@@ -130,5 +130,11 @@
     <None Include="resources\shaders\basicShader.fs">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="resources\shaders\instancedHairShader.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="resources\shaders\instancedHairShader.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

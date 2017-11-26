@@ -28,6 +28,7 @@ namespace ftl
 	public:
 		FTL();
 		void setup(int num, GMath::Vector3 d, GMath::Vector3 pos, Transform* follow = nullptr);
+		void setup(int num, GMath::Vector3 d, GMath::Vector3 pos, std::vector<Vector3> instancesPos, Transform* follow = nullptr);
 		void addForce(GMath::Vector3 f);
 		void update();
 		void draw();
@@ -41,6 +42,14 @@ namespace ftl
 		Transform* follow;
 		std::vector<Particle*> particles;
 		GMath::Vector3 color;
+
+		std::vector<Vector3> positions;
+		std::vector<GLuint> indicies;
+		std::vector<Vector3> instances;
+		GLuint m_vertexArrayBuffers[3];
+		GLuint m_vertexArrayObject;
+		unsigned int m_drawCount;
+
 	};
 
 }

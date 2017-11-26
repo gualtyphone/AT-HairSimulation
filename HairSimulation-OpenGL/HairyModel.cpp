@@ -4,9 +4,11 @@
 #include <algorithm>
 
 
-HairyModel::HairyModel(std::string fileName)
+HairyModel::HairyModel(std::string fileName, Shader* shader)
 	: Model(fileName)
-{}
+{
+	shaderPtr = shader;
+}
 
 void HairyModel::AddHair(Transform* transform)
 {
@@ -23,9 +25,14 @@ void HairyModel::AddHair(Transform* transform)
 			}
 			else
 			{
+				std::vector<Vector3> instancePositions;
+				for (int i = 0; i < 100/*hairThickness*/; i++)
+				{
+					instancePositions.push_back(Vector3(Random::Range(-1, 1), Random::Range(-1, 1), Random::Range(-1, 1)));
+				}
 				/* v does not contain x */
 				hair.push_back(new ftl::FTL());
-				hair[hair.size() - 1]->setup(30, (*vert.GetNormal())/2, *vert.GetPos(), transform);
+				hair[hair.size() - 1]->setup(30, (*vert.GetNormal())/2, *vert.GetPos(), instancePositions, transform);
 			}			
 		}
 	}
@@ -45,6 +52,8 @@ void HairyModel::Draw()
 	{
 		Collide(*collider);
 	}
+	shaderPtr->Update(Transform());
+	shaderPtr->Bind();
 	for (int i = 0; i < hair.size(); i++)
 	{
 		hair[i]->update();

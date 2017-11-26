@@ -8,7 +8,7 @@
 class HairyModel : public Model
 {
 public:
-	HairyModel(std::string fileName);
+	HairyModel(std::string fileName, Shader* shader);
 	HairyModel::~HairyModel()
 	{}
 
@@ -26,5 +26,6 @@ protected:
 private:
 	std::vector<ftl::FTL*> hair;
 	std::vector<SphereCollider*> colliders;
+	Shader* shaderPtr;
 };
 

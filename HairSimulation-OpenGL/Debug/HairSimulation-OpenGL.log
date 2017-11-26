@@ -2,5 +2,5 @@
 c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\hairymodel.h(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\hairymodel.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\hairymodel.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(28): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(29): warning C4305: 'argument': truncation from 'double' to 'float'
   HairSimulation-OpenGL.vcxproj -> C:\Users\Gualty\documents\visual studio 2017\Projects\HairSimulation-OpenGL\Debug\HairSimulation-OpenGL.exe

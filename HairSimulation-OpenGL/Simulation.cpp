@@ -16,6 +16,7 @@ Simulation::Simulation()
 {
 	camera = new Camera(Vector3(0, 0, 30), 1.0f, (float)800 / (float)600, 0.01f, 1000.0f);
 	shaders.push_back(new Shader(std::string("./resources/shaders/basicShader"), camera));
+	shaders.push_back(new Shader(std::string("./resources/shaders/instancedHairShader"), camera));
 
 
 	gameObjects.push_back(new GameObject("Monkey",
@@ -29,7 +30,7 @@ Simulation::Simulation()
 						  new Model("./resources/models/TheRock/TheRock2.obj"),
 						  nullptr, shaders[0]));
 
-	HairyModel* model = new HairyModel("./resources/models/Cap300.obj");
+	HairyModel* model = new HairyModel("./resources/models/Cap300.obj", shaders[1]);
 	model->AddHair(gameObjects[1]->GetTransform());
 	model->AddCollider(&head);
 	gameObjects.push_back(new GameObject("TheRock", Transform(),
@@ -58,10 +59,10 @@ Simulation::~Simulation()
 
 void Simulation::Update()
 {
-	for each (auto& go in gameObjects)
-	{
-		go->Update();
-	}
+	//for each (auto& go in gameObjects)
+	//{
+	//	go->Update();
+	//}
 }
 
 void Simulation::Draw()
@@ -108,16 +109,18 @@ void Simulation::Draw()
 
 	camera->Update();
 
-
+	shaders[0]->Bind();
 	for each (auto& go in gameObjects)
 	{
 		go->Draw();
 	}
+
 	shaders[0]->Update(head.transform);
-	
-	//head.draw();
-	//shaders[0]->Bind();
-	//shaders[0]->Update(Transform());
+	head.draw();
+
+
+	//shaders[1]->Bind();
+	//shaders[1]->Update(Transform());
 	//for (int i = 0; i < 100; i++)
 	//{
 	//	ftl[i]->update();
