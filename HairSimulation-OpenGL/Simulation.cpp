@@ -32,18 +32,30 @@ Simulation::Simulation()
 
 	HairyModel* model = new HairyModel("./resources/models/Cap300.obj", shaders[1]);
 	model->AddHair(gameObjects[1]->GetTransform());
-	model->AddCollider(&head);
 	gameObjects.push_back(new GameObject("TheRock", Transform(),
 						  model,
 						  nullptr, shaders[0]));
 
-	head.radius = 8.5f;
-	head.transform.SetPosition(Vector3(0, 4.5f, -4.5f));
+	SphereCollider coll;
+	coll.radius = 8.5f;
+	coll.transform.SetPosition(Vector3(0, 4.5f, -4.0f));
+	colliders.push_back(coll);
 
-	golden = new Texture("./resources/textures/gld.jpg", "texture_diffuse");
-	//cyl.radius = 9.0f;
-	//cyl.height = 5.0f;
-	//cyl.transform.SetRotation(Vector3(.5, 0, 0));
+	SphereCollider lowerFace;
+	lowerFace.radius = 7.5f;
+	lowerFace.transform.SetPosition(Vector3(0, -2.0f, 0.0f));
+	colliders.push_back(lowerFace);
+
+
+	SphereCollider coll2;
+	coll2.radius = 3.0f;
+	coll2.transform.SetPosition(Vector3(2.0f, 4.0f, 2.0F));
+	colliders.push_back(coll2);
+
+	for (int i = 0; i < colliders.size(); i++)
+	{
+		model->AddCollider(&colliders[i]);
+	}
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -115,8 +127,13 @@ void Simulation::Draw()
 		go->Draw();
 	}
 
-	shaders[0]->Update(head.transform);
-	head.draw();
+	for (int i = 0; i < colliders.size(); i++)
+	{
+		shaders[0]->Update(colliders[i].transform);
+		colliders[i].draw();
+	}
+
+	
 
 
 	//shaders[1]->Bind();

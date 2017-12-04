@@ -54,10 +54,23 @@ void HairyModel::Draw()
 	}
 	shaderPtr->Update(Transform());
 	shaderPtr->Bind();
-	for (int i = 0; i < hair.size(); i++)
+	if (Input::GetKey(KeyCode::F))
 	{
-		hair[i]->update();
-		hair[i]->draw();
+		drawHair = false;
+	}
+
+	if (Input::GetKey(KeyCode::T))
+	{
+		drawHair = true;
+	}
+
+	if (drawHair)
+	{
+		for (int i = 0; i < hair.size(); i++)
+		{
+			hair[i]->update();
+			hair[i]->draw();
+		}
 	}
 }
 
