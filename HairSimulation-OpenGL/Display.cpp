@@ -27,7 +27,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 		}
 		return 0;
 		break;
-
+		case WM_MOUSEMOVE:
+			Input::HandleMouseEvent(message, wparam, lparam);
+			break;
+			return 0;
 		case WM_KEYDOWN:
 			switch (wparam)
 			{
@@ -51,8 +54,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 			}
 			return 0;
 		case WM_LBUTTONDOWN:
-				Input::HandleMouseEvent(message, wparam, lparam);
-				break;
+			Input::HandleMouseEvent(message, wparam, lparam);
+			break;
 			return 0;
 		case WM_RBUTTONDOWN:
 			Input::HandleMouseEvent(message, wparam, lparam);
@@ -66,9 +69,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 			Input::HandleMouseEvent(message, wparam, lparam);
 			break;
 			return 0;
-		case WM_MOUSEMOVE:
-			Input::HandleMouseEvent(message, wparam, lparam);
-			return 0;
+
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
