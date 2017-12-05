@@ -1,2 +1,9 @@
+<<<<<<< HEAD
 ﻿  Display.cpp
   HairSimulation-OpenGL.vcxproj -> C:\Users\Gualty\documents\visual studio 2017\Projects\HairSimulation-OpenGL\Debug\HairSimulation-OpenGL.exe
+=======
+﻿  Mesh.cpp
+d:\hairsimulation-opengl\hairsimulation-opengl\mesh.cpp(20): warning C4018: '<': signed/unsigned mismatch
+  HairSimulation-OpenGL.vcxproj -> D:\HairSimulation-OpenGL\Debug\HairSimulation-OpenGL.exe
+  HairSimulation-OpenGL.vcxproj -> D:\HairSimulation-OpenGL\Debug\HairSimulation-OpenGL.pdb (Partial PDB)
+>>>>>>> f3549386f3c58003c55abe3987cd9b22dab6de65

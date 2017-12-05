@@ -33,7 +33,7 @@ public:
 	inline Matrix4 GetVewProjection() const
 	{
 		//return *GMath::perspective(1.4, 1.1, 0.1f, 100000.0f);
-		return (*(persp) * lookAt(position, position + forward, up));
+		return (*(persp) * lookAt(position, forward, up));
 	}
 
 protected:

@@ -213,9 +213,9 @@ Matrix4* GMath::perspective(float fov, float aspect, float zNear, float zFar)
 					   0, 0, _22, _32,
 					   0, 0, _23, 1);
 }
-Matrix4 GMath::lookAt(Vector3 position, Vector3 other, Vector3 up)
+Matrix4 GMath::lookAt(Vector3 position, Vector3 forward, Vector3 up)
 {
-	Vector3 zaxis = Vector3::normalize(other - position);
+	Vector3 zaxis = forward;
 	Vector3	xaxis =  Vector3::normalize(Vector3::cross(up, zaxis));
 	Vector3	yaxis =  Vector3::cross(zaxis, xaxis);
 	//lil cheat to inver vectors

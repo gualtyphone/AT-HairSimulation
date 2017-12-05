@@ -24,7 +24,7 @@ private:
 	Texture* golden;
 
 	std::vector<ftl::FTL*> ftl;
-	SphereCollider head;
+	std::vector<SphereCollider> colliders;
 	//CylinderCollider cyl;
 };
 

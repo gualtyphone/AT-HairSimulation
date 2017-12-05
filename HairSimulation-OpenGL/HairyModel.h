@@ -27,5 +27,7 @@ private:
 	std::vector<ftl::FTL*> hair;
 	std::vector<SphereCollider*> colliders;
 	Shader* shaderPtr;
+
+	bool drawHair = false;
 };
 

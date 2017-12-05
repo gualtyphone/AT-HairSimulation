@@ -127,7 +127,11 @@ namespace ftl
 			int b = 3;
 		}
 		
+		//gravity
 		addForce(Vector3(0, -0.01f, 0));
+
+		//WindForce
+		//addForce(Vector3(0, 0, -0.051f));
 
 		// update velocities
 		for (std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it)
