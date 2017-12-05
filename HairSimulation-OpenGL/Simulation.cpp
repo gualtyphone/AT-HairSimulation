@@ -14,7 +14,7 @@
 //Fake starting point
 Simulation::Simulation()
 {
-	camera = new Camera(Vector3(0, 0, 30), 1.0f, (float)800 / (float)600, 0.01f, 1000.0f);
+	camera = new Camera(Vector3(0, 0, -30), 1.0f, (float)800 / (float)600, 0.01f, 1000.0f);
 	shaders.push_back(new Shader(std::string("./resources/shaders/basicShader"), camera));
 	shaders.push_back(new Shader(std::string("./resources/shaders/instancedHairShader"), camera));
 
@@ -34,23 +34,63 @@ Simulation::Simulation()
 	model->AddHair(gameObjects[1]->GetTransform());
 	gameObjects.push_back(new GameObject("TheRock", Transform(),
 						  model,
-						  nullptr, shaders[0]));
+						  nullptr, shaders[1]));
 
-	SphereCollider coll;
-	coll.radius = 8.5f;
-	coll.transform.SetPosition(Vector3(0, 4.5f, -4.0f));
-	colliders.push_back(coll);
+	SphereCollider head;
+	head.radius = 8.9f;
+	head.transform.SetPosition(Vector3(0, 3.5f, -5.8f));
+	colliders.push_back(head);
+
+	SphereCollider foreHead;
+	foreHead.radius = 7.5f;
+	foreHead.transform.SetPosition(Vector3(0, 4.7f, -2.3));
+	colliders.push_back(foreHead);
+
+	SphereCollider centerHead;
+	centerHead.radius = 7.5f;
+	centerHead.transform.SetPosition(Vector3(0, 5.4f, -3.8));
+	colliders.push_back(centerHead);
 
 	SphereCollider lowerFace;
 	lowerFace.radius = 7.5f;
 	lowerFace.transform.SetPosition(Vector3(0, -2.0f, 0.0f));
 	colliders.push_back(lowerFace);
 
+	SphereCollider neck;
+	neck.radius = 6.5f;
+	neck.transform.SetPosition(Vector3(0, -7.0f, -2.0f));
+	colliders.push_back(neck);
 
-	SphereCollider coll2;
-	coll2.radius = 3.0f;
-	coll2.transform.SetPosition(Vector3(2.0f, 4.0f, 2.0F));
-	colliders.push_back(coll2);
+	SphereCollider eyeRight;
+	eyeRight.radius = 3.0f;
+	eyeRight.transform.SetPosition(Vector3(2.0f, 4.0f, 3.0f));
+	//colliders.push_back(eyeRight);
+
+	SphereCollider eyeLeft;
+	eyeLeft.radius = 3.0f;
+	eyeLeft.transform.SetPosition(Vector3(-2.0f, 4.0f, 3.0f));
+	//colliders.push_back(eyeLeft);
+
+	SphereCollider earRight;
+	earRight.radius = 2.6f;
+	earRight.transform.SetPosition(Vector3(7.0f, -0.2f, -4.5f));
+	colliders.push_back(earRight);
+
+	SphereCollider earLeft;
+	earLeft.radius = 2.6f;
+	earLeft.transform.SetPosition(Vector3(-7.0f, -0.2f, -4.5f));
+	colliders.push_back(earLeft);
+
+	SphereCollider nose;
+	nose.radius = 2.5f;
+	nose.transform.SetPosition(Vector3(0.0f, 0.7f, 6.0f));
+	colliders.push_back(nose);
+
+	SphereCollider wind;
+	wind.radius = 12.0f;
+	wind.transform.SetPosition(Vector3(0.0f, 0.0f, 12.0f));
+	colliders.push_back(wind);
+
 
 	for (int i = 0; i < colliders.size(); i++)
 	{
@@ -75,6 +115,15 @@ void Simulation::Update()
 	//{
 	//	go->Update();
 	//}
+
+	if (Input::GetKey(KeyCode::U))
+	{
+		showColliders = true;
+	}
+	if (Input::GetKey(KeyCode::H))
+	{
+		showColliders = false;
+	}
 }
 
 void Simulation::Draw()
@@ -127,24 +176,14 @@ void Simulation::Draw()
 		go->Draw();
 	}
 
-	for (int i = 0; i < colliders.size(); i++)
+	if (showColliders)
 	{
-		shaders[0]->Update(colliders[i].transform);
-		colliders[i].draw();
+
+		for (int i = 0; i < colliders.size(); i++)
+		{
+			shaders[0]->Update(colliders[i].transform);
+			colliders[i].draw();
+		}
+
 	}
-
-	
-
-
-	//shaders[1]->Bind();
-	//shaders[1]->Update(Transform());
-	//for (int i = 0; i < 100; i++)
-	//{
-	//	ftl[i]->update();
-	//	ftl[i]->draw();
-	//}
-
-
-	//shaders[0]->Update(cyl.transform);
-	//cyl.Draw();
 }

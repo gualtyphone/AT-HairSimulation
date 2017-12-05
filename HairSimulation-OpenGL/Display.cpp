@@ -254,6 +254,20 @@ void Display::setDisplay(Display* disp)
 	current = disp;
 }
 
+void Display::SetMousePosition(int x, int y)
+{
+	LPRECT WinRect = new RECT();
+	LPRECT ClntRect = new RECT();
+	GetClientRect(hwnd, ClntRect);
+	GetWindowRect(hwnd, WinRect);
+	
+	int X = ((ClntRect->right - ClntRect->left) / 2) + x;
+	int Y = ((ClntRect->bottom - ClntRect->top) / 2) + y;
+	SetCursorPos(X + WinRect->left, Y + WinRect->top);
+
+	Input::SetMousePosition(X, Y);
+}
+
 
 #endif // Win32
 

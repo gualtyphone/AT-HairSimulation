@@ -1,5 +1,6 @@
 #include "Input.h"
 #include <Windowsx.h>
+
 Input::Input()
 {}
 
@@ -39,8 +40,9 @@ void Input::HandleMouseEvent(UINT msg, WPARAM wparam, LPARAM lparam)
 			MousePosition.y = GET_Y_LPARAM(lparam);
 			break;
 	}
-	
 }
+
+
 
 bool Input::GetKeyDown(KeyCode code)
 {
@@ -85,4 +87,13 @@ bool Input::MouseMoved()
 		return true;
 	}
 	return false;
+}
+
+void Input::SetMousePosition(int x, int y)
+{
+	MousePosition.x = x;
+	MousePosition.y = y;
+	PreviousMousePosition.x = x;
+	PreviousMousePosition.y = y;
+	mouseMoved = false;
 }

@@ -39,7 +39,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR szCmdLine
 	//_ASSERT(0 && "testing _ASSERT");
 	//_ASSERTE(0 && "testing _ASSERTE");
 
-	Display* display = new Display(hInstance, iCmdShow, 800, 600, "Hair and Fur");
+	Display* display = new Display(hInstance, iCmdShow, 1900, 1080, "Hair");
 	Display::setDisplay(display);
 	Simulation* sim = new Simulation();
 

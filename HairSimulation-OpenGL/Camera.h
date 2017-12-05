@@ -23,13 +23,6 @@ public:
 		position = position + direction;
 	}
 
-	void Rotate(Vector3 rotation)
-	{
-		forward = forward + rotation;
-		forward.normalize();
-		
-	}
-
 	inline Matrix4 GetVewProjection() const
 	{
 		//return *GMath::perspective(1.4, 1.1, 0.1f, 100000.0f);
@@ -44,5 +37,7 @@ private:
 	Vector3 up;
 	Vector3 right;
 	Vector3 rotation;
+
+	bool mouseFocus = false;
 };
 

@@ -1,9 +1,13 @@
-<<<<<<< HEAD
-﻿  Display.cpp
+﻿  Simulation.cpp
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\hairymodel.h(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\hairymodel.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\hairymodel.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(29): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(46): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(51): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(95): warning C4018: '<': signed/unsigned mismatch
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(182): warning C4018: '<': signed/unsigned mismatch
+  Mesh.cpp
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\mesh.cpp(20): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   HairSimulation-OpenGL.vcxproj -> C:\Users\Gualty\documents\visual studio 2017\Projects\HairSimulation-OpenGL\Debug\HairSimulation-OpenGL.exe
-=======
-﻿  Mesh.cpp
-d:\hairsimulation-opengl\hairsimulation-opengl\mesh.cpp(20): warning C4018: '<': signed/unsigned mismatch
-  HairSimulation-OpenGL.vcxproj -> D:\HairSimulation-OpenGL\Debug\HairSimulation-OpenGL.exe
-  HairSimulation-OpenGL.vcxproj -> D:\HairSimulation-OpenGL\Debug\HairSimulation-OpenGL.pdb (Partial PDB)
->>>>>>> f3549386f3c58003c55abe3987cd9b22dab6de65

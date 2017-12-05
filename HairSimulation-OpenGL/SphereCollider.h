@@ -4,6 +4,8 @@
 class SphereCollider
 {
 public:
+	//Transform parent;
+
 	Transform transform;
 	//GMath::Vector3 pos;
 	float radius;
@@ -20,6 +22,7 @@ public:
 		gluSphere(sphere, radius, 16, 16);
 
 		glEndList();
+		glColor3f(1.0, 1.0, 1.0);
 	}
 };
 

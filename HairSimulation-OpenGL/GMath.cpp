@@ -227,10 +227,26 @@ Matrix4 GMath::lookAt(Vector3 position, Vector3 forward, Vector3 up)
 					 0, 0, 0, 1);
 	Matrix4 Translation(1, 0, 0, -position.GetX(),
 						0, 1, 0, -position.GetY(),
-						0, 0, 1, -position.GetZ(),
+						0, 0, 1, position.GetZ(),
 						0, 0, 0, 1);
 	return Rotation * Translation;
 
 }
 #pragma endregion
 
+GMath::Vector4::Vector4()
+	:Vector4(0,0,0,0)
+{
+
+}
+
+GMath::Vector4::Vector4(float _x, float _y, float _z, float _w)
+	:x(_x), y(_y), z(_z), w(_w)
+{
+
+}
+
+GMath::Vector4::~Vector4()
+{
+
+}

@@ -25,6 +25,7 @@ private:
 
 	std::vector<ftl::FTL*> ftl;
 	std::vector<SphereCollider> colliders;
+	bool showColliders = false;
 	//CylinderCollider cyl;
 };
 

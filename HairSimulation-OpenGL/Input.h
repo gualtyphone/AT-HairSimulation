@@ -170,6 +170,8 @@ public:
 	static Vector2 GetPreviousMousePosition();
 
 	static bool MouseMoved();
+
+	static void SetMousePosition(int x, int y);
 protected:
 private:
 

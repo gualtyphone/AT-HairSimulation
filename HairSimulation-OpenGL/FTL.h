@@ -46,10 +46,12 @@ namespace ftl
 		std::vector<Vector3> positions;
 		std::vector<GLuint> indicies;
 		std::vector<Vector3> instances;
-		GLuint m_vertexArrayBuffers[3];
+		std::vector<Vector4> colors;
+		GLuint m_vertexArrayBuffers[4];
 		GLuint m_vertexArrayObject;
 		unsigned int m_drawCount;
 
+		bool instance = false;
 	};
 
 }

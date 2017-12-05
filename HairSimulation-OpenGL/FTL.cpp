@@ -41,8 +41,15 @@ namespace ftl
 	void FTL::setup(int num, GMath::Vector3 dir, GMath::Vector3 _pos, std::vector<Vector3> instancesPos, Transform* _follow)
 	{
 		pos = _pos;
+
 		originalPos = _pos;
+
 		follow = _follow;
+
+		if (follow != nullptr)
+		{
+			pos = GMath::transformPoint(originalPos, follow->Get());
+		}
 		float dim = 50;
 		len = dir.magnitude();
 		//GMath::Vector3 pos(0, 0, 0);
@@ -76,19 +83,26 @@ namespace ftl
 			indicies.push_back(i);
 		}
 		
-		for (GLuint i = 0; i < instancesPos.size(); i++)
+		instances.push_back(Vector3(0, 0, 0));
+		for (GLuint i = 1; i < instancesPos.size(); i++)
 		{
 			instances.push_back(instancesPos[i]);
 		}
 
-		glGenBuffers(3, m_vertexArrayBuffers);
+		for (GLuint i = 0; i < instances.size(); i++)
+		{
+			colors.push_back(Vector4(0, 1, 0, 1));
+		}
+
+		//Vertices
+		glGenBuffers(4, m_vertexArrayBuffers);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[0]);
 		glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(positions[0]), &positions[0], GL_DYNAMIC_DRAW);
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-
+		//Instanced Positions
 		glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[1]);
 		glBufferData(GL_ARRAY_BUFFER, instances.size() * sizeof(instances[0]), &instances[0], GL_DYNAMIC_DRAW);
 		
@@ -97,8 +111,18 @@ namespace ftl
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glVertexAttribDivisor(1, divisor); //is it instanced?
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexArrayBuffers[2]);
+		//Instanced Colors
+		glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[2]);
+		glBufferData(GL_ARRAY_BUFFER, colors.size() * sizeof(colors[0]), &colors[0], GL_DYNAMIC_DRAW);
+
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, 0);
+		glVertexAttribDivisor(2, divisor);
+
+		//Indicies
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexArrayBuffers[3]);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicies.size() * sizeof(indicies[0]), &indicies[0], GL_DYNAMIC_DRAW);
+
 
 		//clear loaded vertex array
 		glBindVertexArray(0);
@@ -122,9 +146,7 @@ namespace ftl
 
 		if (follow != nullptr)
 		{
-			int a = 0;
 			particles[0]->position = GMath::transformPoint(originalPos, follow->Get());
-			int b = 3;
 		}
 		
 		//gravity
@@ -132,6 +154,16 @@ namespace ftl
 
 		//WindForce
 		//addForce(Vector3(0, 0, -0.051f));
+
+		if (Input::GetKey(KeyCode::Y))
+		{
+			instance = true;
+		}
+		if (Input::GetKey(KeyCode::G))
+		{
+			instance = false;
+		}
+
 
 		// update velocities
 		for (std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it)
@@ -181,6 +213,7 @@ namespace ftl
 
 	void FTL::draw()
 	{
+		//This could definetly be improved
 		positions.clear();
 		for (std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it)
 		{
@@ -188,27 +221,22 @@ namespace ftl
 		}
 
 		glBindVertexArray(m_vertexArrayObject);
-		//glGenBuffers(2, m_vertexArrayBuffers);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[0]);
 		glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(positions[0]), &positions[0], GL_DYNAMIC_DRAW);
+
+		glLineWidth(0.1f);
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-		//glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[1]);
-		//glBufferData(GL_ARRAY_BUFFER, instances.size() * sizeof(instances[0]), &instances[0], GL_DYNAMIC_DRAW);
-
-		//glEnableVertexAttribArray(1);
-		//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-		//clear loaded vertex array
-		glBindVertexArray(0);
-
-		glLineWidth(0.1f);
-		glBindVertexArray(m_vertexArrayObject);
-
-		glDrawElementsInstanced(GL_LINE_STRIP, m_drawCount, GL_UNSIGNED_INT, NULL, instances.size());
-		//glDrawElements(GL_LINE_STRIP, m_drawCount, GL_UNSIGNED_INT, NULL);
+		if (instance)
+		{
+			glDrawElementsInstanced(GL_LINE_STRIP, m_drawCount, GL_UNSIGNED_INT, NULL, instances.size());
+		}
+		else
+		{
+			glDrawElements(GL_LINE_STRIP, m_drawCount, GL_UNSIGNED_INT, NULL);
+		}
 
 		glBindVertexArray(0);
 
@@ -243,7 +271,12 @@ namespace ftl
 			}
 			if ((p->position - coll.transform.GetPosition()).magnitude() <= coll.radius)
 			{
-				p->forces = (p->position - coll.transform.GetPosition())/10;
+				Vector3 force = (p->position - coll.transform.GetPosition());
+				force.normalize();
+				force = force * (coll.radius - (p->position - coll.transform.GetPosition()).magnitude());
+
+				p->forces = force;
+				/*}*/
 			}
 		}
 	

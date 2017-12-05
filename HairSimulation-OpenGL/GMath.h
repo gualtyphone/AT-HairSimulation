@@ -9,6 +9,36 @@ namespace GMath
 	class Vector2;
 	class Quaternion;
 
+	class Vector4
+	{
+	public:
+		Vector4();
+		Vector4(float _x, float _y, float _z, float _w);
+		~Vector4();
+
+		inline float const GetX() const
+		{
+			return x;
+		}
+		inline float const GetY() const
+		{
+			return y;
+		}
+		inline float const GetZ() const
+		{
+			return z;
+		}
+		inline float const GetW() const
+		{
+			return w;
+		}
+
+	protected:
+	private:
+		float x, y, z, w;
+
+	};
+
 	class Vector3
 	{
 	public:

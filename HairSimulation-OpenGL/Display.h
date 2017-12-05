@@ -33,6 +33,8 @@ public:
 
 	static Display* getDisplay();
 	static void setDisplay(Display*);
+
+	void SetMousePosition(int x, int y);
 };
 
 #endif
