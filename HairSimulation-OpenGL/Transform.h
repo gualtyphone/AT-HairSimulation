@@ -6,9 +6,12 @@ class Transform
 public:
 	Transform(Vector3& _pos = Vector3(0, 0, 0), Vector3& _rot= Vector3(0, 0, 0), Vector3& _scale= Vector3(1, 1, 1)) :
 		Position(_pos), Rotation(_rot), Scale(_scale)
-	{}
-	~Transform()
-	{}
+	{
+		Update();
+	}
+	Transform(const Transform& other);
+
+	~Transform();
 
 	inline void SetPosition(Vector3& _pos) { Position = _pos; }
 	inline void SetRotation(Vector3& _rot) { Rotation = _rot; }
@@ -20,7 +23,7 @@ public:
 
 	inline void Move(Vector3& _dir) { Position = Position + _dir; }
 
-	inline Matrix4 Get() const
+	inline void Update()
 	{
 		Matrix4 posMat = translate(Position);
 		Matrix4 rotXMat = rotateAroundXAxis(Rotation.GetX());
@@ -29,7 +32,17 @@ public:
 		Matrix4 scaleMat = scale(Scale);
 
 		Matrix4 rotMat = rotZMat * rotYMat * rotXMat;
-		return posMat * rotMat * scaleMat;
+		mat = posMat * rotMat * scaleMat;
+	}
+
+	inline Matrix4 Get() const
+	{
+		return mat;
+	}
+
+	inline Matrix4& GetRef()
+	{
+		return mat;
 	}
 
 protected:
@@ -38,5 +51,7 @@ private:
 	//Watch out for gimbal lock
 	Vector3 Rotation;
 	Vector3 Scale;
+
+	Matrix4 mat;
 };
 

@@ -1,6 +1,7 @@
 #include "HairyModel.h"
 #include "Input.h"
 #include "Random.h"
+#include "Lighting.h"
 #include <algorithm>
 
 
@@ -52,7 +53,7 @@ void HairyModel::Draw()
 	{
 		Collide(*collider);
 	}
-	shaderPtr->Update(Transform());
+	shaderPtr->Update(Transform(), *Lighting::GetLight()) ;
 	shaderPtr->Bind();
 	if (Input::GetKey(KeyCode::F))
 	{
@@ -79,5 +80,15 @@ void HairyModel::Collide(SphereCollider& coll)
 	for each (auto strand in hair)
 	{
 		strand->Collide(coll);
+	}
+}
+
+void HairyModel::AddForce(Vector3 force, float strength = 1.0f)
+{
+	force.normalize();
+	Vector3	newForce = force * strength;
+	for each (auto strand in hair)
+	{
+		strand->addForce(newForce);
 	}
 }

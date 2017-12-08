@@ -35,7 +35,10 @@ namespace GMath
 
 	protected:
 	private:
-		float x, y, z, w;
+		float x;
+		float y;
+		float z;
+		float w;
 
 	};
 
@@ -218,8 +221,11 @@ namespace GMath
 
 		~Matrix4();
 
+		Matrix4(const Matrix4& other);
+
 		friend Matrix4 operator*(const Matrix4&, const Matrix4&);
 		friend Matrix4 operator*(const Matrix4&, const Vector4&);
+		Matrix4& operator=(const Matrix4&);
 		inline float* Get() const
 		{
 			return m;

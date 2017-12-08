@@ -27,7 +27,9 @@ Shader::Shader(std::string& fileName)
 	glValidateProgram(m_program);
 	CheckShaderError(m_program, GL_VALIDATE_STATUS, true, "Error: Shader program is invalid: ");
 
-	m_uniforms[0] = glGetUniformLocation(m_program, "transform");
+	m_uniforms[TRANSFORM_U] = glGetUniformLocation(m_program, "transform");
+	m_uniforms[LIGHTDIR_U] = glGetUniformLocation(m_program, "lightDirection");
+
 }
 
 Shader::Shader(std::string & fileName, Camera * _camera)
@@ -59,9 +61,37 @@ void Shader::Update(const Transform & transform, const Camera& cam)
 	
 }
 
+void Shader::Update(const Transform & transform, const Camera & cam, const  Vector3& lightDir)
+{
+	glUseProgram(m_program);
+	Matrix4 m = camera->GetVewProjection() * transform.Get();
+	glUniformMatrix4fv(m_uniforms[0], 1, GL_TRUE, &(m.Get()[0]));
+	glUniform3f(m_uniforms[1], lightDir.GetX(), lightDir.GetY(), lightDir.GetZ());
+}
+
 void Shader::Update(const Transform & transform)
 {
 	Update(transform, *camera);
+}
+
+void Shader::Update(const Transform & transform, const Vector3& lightDir)
+{
+	Update(transform, *camera, lightDir);
+}
+
+void Shader::Update(const Matrix4 & transform)
+{
+	glUseProgram(m_program);
+	Matrix4 m = camera->GetVewProjection() * transform;
+	glUniformMatrix4fv(m_uniforms[0], 1, GL_TRUE, &(m.Get()[0]));
+}
+void Shader::Update(const Matrix4 & transform, const Vector3& lightDir)
+{
+	glUseProgram(m_program);
+	Matrix4 m = camera->GetVewProjection() * transform;
+	glUniformMatrix4fv(m_uniforms[0], 1, GL_TRUE, &(m.Get()[0]));
+	glUniform3f(m_uniforms[1], lightDir.GetX(), lightDir.GetY(), lightDir.GetZ());
+
 }
 
 static GLuint CreateShader(const std::string& text, GLenum shaderType)

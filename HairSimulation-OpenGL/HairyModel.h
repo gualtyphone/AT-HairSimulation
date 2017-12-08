@@ -22,6 +22,9 @@ public:
 	{
 		colliders.push_back(coll);
 	}
+
+	void AddForce(Vector3 force, float strength);
+
 protected:
 private:
 	std::vector<ftl::FTL*> hair;

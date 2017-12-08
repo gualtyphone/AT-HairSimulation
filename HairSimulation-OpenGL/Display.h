@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include "GMath.h"
 
 class Display
 {
@@ -28,6 +29,8 @@ public:
 
 	void StartDraw();
 	void EndDraw();
+
+	GMath::Vector2 GetSize();
 
 	//LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 

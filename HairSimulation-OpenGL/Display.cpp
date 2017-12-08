@@ -1,5 +1,6 @@
 #include "Display.h"
 #include "Input.h"
+#include "AntTweakBar\AntTweakBar.h"
 #define Win32
 #ifdef Win32
 
@@ -9,6 +10,8 @@ static Display* current;
 //This should probs be inside of the Display class
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
+	if (TwEventWin(hwnd, message, wparam, lparam)) // send event message to AntTweakBar
+		return 0; // event has been handled by AntTweakBar
 	switch (message)
 	{
 		case WM_CREATE:
@@ -240,6 +243,16 @@ void Display::StartDraw()
 void Display::EndDraw()
 {
 	SwapBuffers(hdc);
+}
+
+GMath::Vector2 Display::GetSize()
+{
+	LPRECT WinRect = new RECT();
+	LPRECT ClntRect = new RECT();
+	GetClientRect(hwnd, ClntRect);
+	GetWindowRect(hwnd, WinRect);
+
+	return  GMath::Vector2((ClntRect->right - ClntRect->left), (ClntRect->bottom - ClntRect->top));
 }
 
 

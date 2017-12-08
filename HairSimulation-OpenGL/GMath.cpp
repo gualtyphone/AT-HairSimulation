@@ -86,29 +86,53 @@ Matrix4::Matrix4(float _11, float  _12, float  _13, float  _14,
 
 GMath::Matrix4::~Matrix4()
 {
-	delete[] m;
+	if (m != nullptr)
+	{
+		delete[] m;
+		m = nullptr;
+	}
+}
+
+GMath::Matrix4::Matrix4(const Matrix4 & other)
+{
+	m = new float[16];
+
+	m[0] = other.Get(0); m[1] = other.Get(1); m[2] = other.Get(2); m[3] = other.Get(3);
+	m[4] = other.Get(4); m[5] = other.Get(5); m[6] = other.Get(6); m[7] = other.Get(7);
+	m[8] = other.Get(8); m[9] = other.Get(9); m[10] = other.Get(10); m[11] = other.Get(11);
+	m[12] = other.Get(12); m[13] = other.Get(13); m[14] = other.Get(14); m[15] = other.Get(15);
 }
 
 Matrix4 GMath::operator*(const Matrix4& a, const Matrix4& b)
 {
 	return Matrix4(
-		a.Get()[0] * b.Get()[0] + a.Get()[1] * b.Get()[4] + a.Get()[2] * b.Get()[8] + a.Get()[3] * b.Get()[12],
-		a.Get()[0] * b.Get()[1] + a.Get()[1] * b.Get()[5] + a.Get()[2] * b.Get()[9] + a.Get()[3] * b.Get()[13],
-		a.Get()[0] * b.Get()[2] + a.Get()[1] * b.Get()[6] + a.Get()[2] * b.Get()[10] + a.Get()[3] * b.Get()[14],
-		a.Get()[0] * b.Get()[3] + a.Get()[1] * b.Get()[7] + a.Get()[2] * b.Get()[11] + a.Get()[3] * b.Get()[15],
-		a.Get()[4] * b.Get()[0] + a.Get()[5] * b.Get()[4] + a.Get()[6] * b.Get()[8] + a.Get()[7] * b.Get()[12],
-		a.Get()[4] * b.Get()[1] + a.Get()[5] * b.Get()[5] + a.Get()[6] * b.Get()[9] + a.Get()[7] * b.Get()[13],
-		a.Get()[4] * b.Get()[2] + a.Get()[5] * b.Get()[6] + a.Get()[6] * b.Get()[10] + a.Get()[7] * b.Get()[14],
-		a.Get()[4] * b.Get()[3] + a.Get()[5] * b.Get()[7] + a.Get()[6] * b.Get()[11] + a.Get()[7] * b.Get()[15],
-		a.Get()[8] * b.Get()[0] + a.Get()[9] * b.Get()[4] + a.Get()[10] * b.Get()[8] + a.Get()[11] * b.Get()[12],
-		a.Get()[8] * b.Get()[1] + a.Get()[9] * b.Get()[5] + a.Get()[10] * b.Get()[9] + a.Get()[11] * b.Get()[13],
-		a.Get()[8] * b.Get()[2] + a.Get()[9] * b.Get()[6] + a.Get()[10] * b.Get()[10] + a.Get()[11] * b.Get()[14],
-		a.Get()[8] * b.Get()[3] + a.Get()[9] * b.Get()[7] + a.Get()[10] * b.Get()[11] + a.Get()[11] * b.Get()[15],
-		a.Get()[12] * b.Get()[0] + a.Get()[13] * b.Get()[4] + a.Get()[14] * b.Get()[8] + a.Get()[15] * b.Get()[12],
-		a.Get()[12] * b.Get()[1] + a.Get()[13] * b.Get()[5] + a.Get()[14] * b.Get()[9] + a.Get()[15] * b.Get()[13],
-		a.Get()[12] * b.Get()[2] + a.Get()[13] * b.Get()[6] + a.Get()[14] * b.Get()[10] + a.Get()[15] * b.Get()[14],
-		a.Get()[12] * b.Get()[3] + a.Get()[13] * b.Get()[7] + a.Get()[14] * b.Get()[11] + a.Get()[15] * b.Get()[15]);
+		a.Get(0) * b.Get(0) + a.Get(1) * b.Get(4) + a.Get(2) * b.Get(8) + a.Get(3) * b.Get(12),
+		a.Get(0) * b.Get(1) + a.Get(1) * b.Get(5) + a.Get(2) * b.Get(9) + a.Get(3) * b.Get(13),
+		a.Get(0) * b.Get(2) + a.Get(1) * b.Get(6) + a.Get(2) * b.Get(10) + a.Get(3) * b.Get(14),
+		a.Get(0) * b.Get(3) + a.Get(1) * b.Get(7) + a.Get(2) * b.Get(11) + a.Get(3) * b.Get(15),
+		a.Get(4) * b.Get(0) + a.Get(5) * b.Get(4) + a.Get(6) * b.Get(8) + a.Get(7) * b.Get(12),
+		a.Get(4) * b.Get(1) + a.Get(5) * b.Get(5) + a.Get(6) * b.Get(9) + a.Get(7) * b.Get(13),
+		a.Get(4) * b.Get(2) + a.Get(5) * b.Get(6) + a.Get(6) * b.Get(10) + a.Get(7) * b.Get(14),
+		a.Get(4) * b.Get(3) + a.Get(5) * b.Get(7) + a.Get(6) * b.Get(11) + a.Get(7) * b.Get(15),
+		a.Get(8) * b.Get(0) + a.Get(9) * b.Get(4) + a.Get(10) * b.Get(8) + a.Get(11) * b.Get(12),
+		a.Get(8) * b.Get(1) + a.Get(9) * b.Get(5) + a.Get(10) * b.Get(9) + a.Get(11) * b.Get(13),
+		a.Get(8) * b.Get(2) + a.Get(9) * b.Get(6) + a.Get(10) * b.Get(10) + a.Get(11) * b.Get(14),
+		a.Get(8) * b.Get(3) + a.Get(9) * b.Get(7) + a.Get(10) * b.Get(11) + a.Get(11) * b.Get(15),
+		a.Get(12) * b.Get(0) + a.Get(13) * b.Get(4) + a.Get(14) * b.Get(8) + a.Get(15) * b.Get(12),
+		a.Get(12) * b.Get(1) + a.Get(13) * b.Get(5) + a.Get(14) * b.Get(9) + a.Get(15) * b.Get(13),
+		a.Get(12) * b.Get(2) + a.Get(13) * b.Get(6) + a.Get(14) * b.Get(10) + a.Get(15) * b.Get(14),
+		a.Get(12) * b.Get(3) + a.Get(13) * b.Get(7) + a.Get(14) * b.Get(11) + a.Get(15) * b.Get(15));
 
+}
+
+Matrix4& GMath::Matrix4::operator=(const Matrix4 & other)
+{
+	m[0] = other.Get(0); m[1] = other.Get(1); m[2] = other.Get(2); m[3] = other.Get(3);
+	m[4] = other.Get(4); m[5] = other.Get(5); m[6] = other.Get(6); m[7] = other.Get(7);
+	m[8] = other.Get(8); m[9] = other.Get(9); m[10] = other.Get(10); m[11] = other.Get(11);
+	m[12] = other.Get(12); m[13] = other.Get(13); m[14] = other.Get(14); m[15] = other.Get(15);
+
+	return *this;
 }
 
 Matrix4 GMath::translate(Vector3 v)

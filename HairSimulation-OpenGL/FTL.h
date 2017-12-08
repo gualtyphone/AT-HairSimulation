@@ -44,10 +44,11 @@ namespace ftl
 		GMath::Vector3 color;
 
 		std::vector<Vector3> positions;
+		std::vector<Vector3> directions;
 		std::vector<GLuint> indicies;
 		std::vector<Vector3> instances;
 		std::vector<Vector4> colors;
-		GLuint m_vertexArrayBuffers[4];
+		GLuint m_vertexArrayBuffers[5];
 		GLuint m_vertexArrayObject;
 		unsigned int m_drawCount;
 

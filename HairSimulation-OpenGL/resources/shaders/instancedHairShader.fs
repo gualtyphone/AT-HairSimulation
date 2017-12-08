@@ -1,13 +1,13 @@
-#version 120
+#version 330
 
+in highp vec4 color0;
+in highp vec3 direction0;
 
-uniform sampler2D diffuse;
+uniform vec3 lightDirection;
 
-varying vec4 color0;
-varying vec3 normal0;
-//uniform vec3 lightdirection;
+out highp vec4 output;
 
 void main()
 {
-	gl_FragColor = color0;// * dot(-vec3(0, 0, 1), normal0);
+	output = color0 * (1- dot(lightDirection, direction0));
 }

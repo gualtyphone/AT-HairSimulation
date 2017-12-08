@@ -5,8 +5,8 @@
 #include "FTL.h"
 #include "HairyModel.h"
 #include "SphereCollider.h"
-//#include "CylinderCollider.h"
 #include "GameObject.h"
+#include "AntTweakBar\AntTweakBar.h"
 
 class Simulation
 {
@@ -17,15 +17,25 @@ public:
 	void Update();
 	void Draw();
 private:
-	std::vector<Shader*> shaders;
-	std::vector<GameObject*> gameObjects;
 	Camera* camera;
 
-	Texture* golden;
+	std::vector<Shader*> shaders;
+	std::vector<GameObject*> gameObjects;
+	std::vector<HairyModel*> hairyModels;
+	std::vector<SphereCollider> colliders;
 
 	std::vector<ftl::FTL*> ftl;
-	std::vector<SphereCollider> colliders;
+
+	TwBar *mainBar;
+
+	Vector3 windDir = Vector3(1, 0, 0);
+	float windForce = 1.0f;
+	float gravForce = 0.1f;
+
+	bool enableWind = false;
+	bool enableGravity = true;
 	bool showColliders = false;
-	//CylinderCollider cyl;
+	bool showHair = false;
+	bool showInstancedHair = false;
 };
 

@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Lighting.h"
 
 
 
@@ -39,7 +40,8 @@ void GameObject::Draw()
 	if (shader != nullptr)
 	{		
 		shader->Bind();
-		shader->Update(transform);
+		transform.Update();
+		shader->Update(transform, *Lighting::GetLight());
 	}
 	if (texture != nullptr)
 	{
