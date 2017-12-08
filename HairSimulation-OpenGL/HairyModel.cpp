@@ -4,11 +4,35 @@
 #include "Lighting.h"
 #include <algorithm>
 
+void TW_CALL ApplyHairSettings(void *clientData)
+{
+	HairyModel* hm = (HairyModel*)clientData;
+	hm->ApplySettings();
+
+	_RPT0(_CRT_ERROR, "Applying Settings\n");
+}
 
 HairyModel::HairyModel(std::string fileName, Shader* shader)
 	: Model(fileName)
 {
 	shaderPtr = shader;
+	hairBar = TwNewBar("Hairs");
+
+	TwAddVarRW(hairBar, "Draw Hair", TW_TYPE_BOOL8, &drawHair, "");
+	TwAddVarRW(hairBar, "Draw Instanced Hair", TW_TYPE_BOOL8, &drawInstancedHair, "");
+	TwAddSeparator(hairBar, NULL, "");
+	TwAddVarRW(hairBar, "Color", TW_TYPE_COLOR4F, &hairColor, "");
+	TwAddVarRW(hairBar, "Color Variation", TW_TYPE_FLOAT, &colorVariation, "step=0.01");
+	TwAddSeparator(hairBar, NULL, "");
+	TwAddVarRW(hairBar, "Hair Segments", TW_TYPE_INT16, &hairSegments, "");
+	TwAddVarRW(hairBar, "Hair Segment Length", TW_TYPE_FLOAT, &hairLength, "step=0.01");
+	TwAddVarRW(hairBar, "Hair Instances", TW_TYPE_INT16, &instancedHairNumber, "");
+	TwAddVarRW(hairBar, "Hair Instances Distance", TW_TYPE_FLOAT, &instancedHairDist, "step=0.01");
+	TwAddSeparator(hairBar, NULL, "");
+	TwAddVarRW(hairBar, "Hair Stiffness", TW_TYPE_FLOAT, &hairStiffness, "step=0.01");
+
+	TwAddButton(hairBar, "Apply", ApplyHairSettings, this , "");
+	
 }
 
 void HairyModel::AddHair(Transform* transform)
@@ -41,14 +65,6 @@ void HairyModel::AddHair(Transform* transform)
 
 void HairyModel::Draw()
 {
-	//if (Input::GetKey(KeyCode::D))
-	//{
-	//	for (int i = 0; i < hair.size(); i++)
-	//	{
-	//		hair[i]->addForce(Vector3(Random::Range(0.4f, 0.6f), 0, 0));
-	//	}
-	//}
-	//Model::Draw();
 	for each (auto collider in colliders)
 	{
 		Collide(*collider);
@@ -70,7 +86,7 @@ void HairyModel::Draw()
 		for (int i = 0; i < hair.size(); i++)
 		{
 			hair[i]->update();
-			hair[i]->draw();
+			hair[i]->draw(drawInstancedHair);
 		}
 	}
 }
@@ -91,4 +107,26 @@ void HairyModel::AddForce(Vector3 force, float strength = 1.0f)
 	{
 		strand->addForce(newForce);
 	}
+}
+
+void HairyModel::ApplySettings()
+{
+	for each (auto strand in hair)
+	{
+		strand->SetNumberOfParticles(hairSegments);
+		CreateAndUpdateInstances(strand);
+		strand->SetColors(hairColor, colorVariation);
+		strand->len = hairLength;
+	}
+}
+
+void HairyModel::CreateAndUpdateInstances(ftl::FTL* strand)
+{
+	std::vector<Vector3> instancePositions;
+	for (int i = 0; i < instancedHairNumber; i++)
+	{
+		instancePositions.push_back(Random::Vec3(-instancedHairDist, instancedHairDist));
+	}
+
+	strand->SetInstances(instancePositions);
 }

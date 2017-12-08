@@ -38,7 +38,7 @@ namespace ftl
 		setup(num, dir, _pos, instancesPos, follow);
 	}
 
-	void FTL::setup(int num, GMath::Vector3 dir, GMath::Vector3 _pos, std::vector<Vector3> instancesPos, Transform* _follow)
+	void FTL::setup(int num, GMath::Vector3 _dir, GMath::Vector3 _pos, std::vector<Vector3> instancesPos, Transform* _follow)
 	{
 		pos = _pos;
 
@@ -51,14 +51,15 @@ namespace ftl
 			pos = GMath::transformPoint(originalPos, follow->Get());
 		}
 		float dim = 50;
-		len = dir.magnitude();
+		len = _dir.magnitude();
+		originalDir = _dir;
 		//GMath::Vector3 pos(0, 0, 0);
 		float mass = Random::Range(0.2f, 0.8f);
 		for (int i = 0; i < num; ++i)
 		{
 			Particle* p = new Particle(pos, mass); //rx_random(1.0f, 10.0f));
 			particles.push_back(p);
-			pos = pos + dir;
+			pos = pos + originalDir;
 		}
 
 		particles[0]->enabled = false;
@@ -162,19 +163,6 @@ namespace ftl
 		{
 			particles[0]->position = GMath::transformPoint(originalPos, follow->Get());
 		}
-		
-		//WindForce
-		//addForce(Vector3(0, 0, -0.051f));
-
-		if (Input::GetKey(KeyCode::Y))
-		{
-			instance = true;
-		}
-		if (Input::GetKey(KeyCode::G))
-		{
-			instance = false;
-		}
-
 
 		// update velocities
 		for (std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it)
@@ -222,7 +210,7 @@ namespace ftl
 
 	}
 
-	void FTL::draw()
+	void FTL::draw(bool instance)
 	{
 		//This could definetly be improved
 		positions.clear();
@@ -306,6 +294,86 @@ namespace ftl
 			}
 		}
 	
+	}
+
+	void FTL::SetNumberOfParticles(int num)
+	{
+		for each(auto part in particles)
+		{
+			delete(part);
+		}
+		particles.clear();
+		float mass = Random::Range(0.2f, 0.8f);
+		for (int i = 0; i < num; ++i)
+		{
+			Particle* p = new Particle(pos, mass); //rx_random(1.0f, 10.0f));
+			particles.push_back(p);
+			pos = pos + originalDir;
+		}
+		particles[0]->enabled = false;
+
+		m_drawCount = particles.size();
+
+		positions.clear();
+		for (std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); ++it)
+		{
+			positions.push_back((*it)->position);
+		}
+
+		indicies.clear();
+		for (GLuint i = 0; i < positions.size(); i++)
+		{
+			indicies.push_back(i);
+		}
+
+
+		glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[0]);
+		glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(positions[0]), &positions[0], GL_DYNAMIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+		//Indicies
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexArrayBuffers[4]);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicies.size() * sizeof(indicies[0]), &indicies[0], GL_DYNAMIC_DRAW);
+
+	}
+
+	void FTL::SetInstances(std::vector<Vector3> instancesPos)
+	{
+		instances.clear();
+		instances.push_back(Vector3(0, 0, 0));
+		for (GLuint i = 1; i < instancesPos.size(); i++)
+		{
+			instances.push_back(instancesPos[i]);
+		}
+
+		//Instanced Positions
+		glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[1]);
+		glBufferData(GL_ARRAY_BUFFER, instances.size() * sizeof(instances[0]), &instances[0], GL_DYNAMIC_DRAW);
+
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	}
+
+	void FTL::SetColors(Vector4 baseColor, float variation)
+	{
+		colors.clear();
+		for (GLuint i = 0; i < instances.size(); i++)
+		{
+			Vector4 col = Vector4(baseColor.GetX() + Random::Range(-variation, variation),
+								  baseColor.GetY() + Random::Range(-variation, variation), 
+								  baseColor.GetZ() + Random::Range(-variation, variation),
+								  baseColor.GetW());
+			colors.push_back(col);
+		}
+
+		//Instanced Colors
+		glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[2]);
+		glBufferData(GL_ARRAY_BUFFER, colors.size() * sizeof(colors[0]), &colors[0], GL_DYNAMIC_DRAW);
+
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	}
 
 }

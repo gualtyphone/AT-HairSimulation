@@ -1,8 +1,19 @@
-﻿  Simulation.cpp
-c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\hairymodel.h(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\hairymodel.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\hairymodel.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+﻿  HairyModel.cpp
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\hairymodel.cpp(86): warning C4018: '<': signed/unsigned mismatch
+  FTL.cpp
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\gmath.h(67): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\ftl.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\ftl.cpp(22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\ftl.cpp(81): warning C4018: '<': signed/unsigned mismatch
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\ftl.cpp(178): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\ftl.cpp(222): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  Simulation.cpp
 c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(22): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(122): warning C4018: '<': signed/unsigned mismatch
-c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(209): warning C4018: '<': signed/unsigned mismatch
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(128): warning C4018: '<': signed/unsigned mismatch
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\simulation.cpp(231): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  main.cpp
   HairSimulation-OpenGL.vcxproj -> C:\Users\Gualty\documents\visual studio 2017\Projects\HairSimulation-OpenGL\Debug\HairSimulation-OpenGL.exe

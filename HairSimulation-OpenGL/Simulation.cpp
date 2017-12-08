@@ -32,8 +32,6 @@ Simulation::Simulation()
 	TwAddSeparator(mainBar, NULL, "");
 	TwAddVarRW(mainBar, "Light Direction", TW_TYPE_DIR3F, Lighting::GetLight(), "");
 	TwAddSeparator(mainBar, NULL, "");
-	TwAddVarRW(mainBar, "Draw Hair", TW_TYPE_BOOL8, &showHair, "");
-	TwAddVarRW(mainBar, "Draw InstancedHair", TW_TYPE_BOOL8, &showInstancedHair, "");
 	TwAddVarRW(mainBar, "Draw Colliders", TW_TYPE_BOOL8, &showColliders, "");
 
 	camera = new Camera(Vector3(0, 0, -30), 1.0f, (float)800 / (float)600, 0.01f, 1000.0f);
@@ -238,5 +236,5 @@ void Simulation::Draw()
 
 	}
 
-	//TwDraw();
+	TwDraw();
 }

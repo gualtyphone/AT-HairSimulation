@@ -31,13 +31,20 @@ namespace ftl
 		void setup(int num, GMath::Vector3 d, GMath::Vector3 pos, std::vector<Vector3> instancesPos, Transform* follow = nullptr);
 		void addForce(GMath::Vector3 f);
 		void update();
-		void draw();
+		void draw(bool instance);
 
 		void Collide(SphereCollider& coll);
+		
+		void SetNumberOfParticles(int num);
+		void SetInstances(std::vector<Vector3> instancesPos);
+		void SetColors(Vector4 baseColor, float variation);
+
+
 
 	public:
 		float len;
 		GMath::Vector3 pos;
+		GMath::Vector3 originalDir;
 		GMath::Vector3 originalPos;
 		Transform* follow;
 		std::vector<Particle*> particles;
@@ -51,8 +58,6 @@ namespace ftl
 		GLuint m_vertexArrayBuffers[5];
 		GLuint m_vertexArrayObject;
 		unsigned int m_drawCount;
-
-		bool instance = false;
 	};
 
 }
