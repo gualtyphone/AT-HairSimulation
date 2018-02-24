@@ -1,0 +1,13 @@
+﻿  FTL.cpp
+c:\users\gualty\documents\visual studio 2017\projects\hairsimulation-opengl\hairsimulation-opengl\GMath.h(67): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+FTL.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
+FTL.cpp(22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+FTL.cpp(82): warning C4018: '<': signed/unsigned mismatch
+FTL.cpp(179): warning C4305: 'argument': truncation from 'double' to 'const float'
+FTL.cpp(223): warning C4018: '<': signed/unsigned mismatch
+  Generating code
+  0 of 1442 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  HairSimulation-OpenGL.vcxproj -> C:\Users\Gualty\documents\visual studio 2017\Projects\HairSimulation-OpenGL\Release\HairSimulation-OpenGL.exe
